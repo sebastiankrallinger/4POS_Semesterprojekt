@@ -1,13 +1,13 @@
-package com.example.chatserver;
+package com.example.webapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChatServerApplication {
+public class WebAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ChatServerApplication.class, args);
+        SpringApplication.run(WebAppApplication.class, args);
     }
 
 }
