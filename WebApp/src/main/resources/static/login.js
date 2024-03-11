@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 201) {
-                console.log('User created successfully');
+                console.log('User saved');
                 window.location.href = '/app/mainPage';
             }
         };
