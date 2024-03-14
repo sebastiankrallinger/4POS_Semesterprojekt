@@ -1,15 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Füge den Event Listener erst hinzu, wenn das DOM vollständig geladen ist
     document.getElementById('user').addEventListener('submit', function(event) {
         event.preventDefault();
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
 
-        var data = {
+        let data = {
             username: username,
             password: password
         };
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open('POST', '/app/user', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
