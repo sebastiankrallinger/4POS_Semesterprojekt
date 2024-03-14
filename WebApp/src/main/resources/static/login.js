@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Füge den Event Listener erst hinzu, wenn das DOM vollständig geladen ist
     document.getElementById('user').addEventListener('submit', function(event) {
         event.preventDefault();
-        var username = "example_user";
-        var password = "example_password";
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
 
         var data = {
             username: username,
