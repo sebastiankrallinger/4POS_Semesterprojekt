@@ -3,20 +3,23 @@ package com.example.webapp.models;
 import org.apache.catalina.User;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.Objects;
 
 public class UserEntity {
     private ObjectId id;
     private String username;
     private String password;
+    private List<ChatEntity> chatEntities;
 
     public UserEntity() {
     }
 
-    public UserEntity(ObjectId id, String username, String password) {
+    public UserEntity(ObjectId id, String username, String password, List<ChatEntity> chatEntities) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.chatEntities = chatEntities;
     }
 
     public ObjectId getId() {
@@ -46,9 +49,18 @@ public class UserEntity {
         return this;
     }
 
+    public List<ChatEntity> getChats() {
+        return chatEntities;
+    }
+
+    public UserEntity setChats(List<ChatEntity> chatEntities) {
+        this.chatEntities = chatEntities;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + '}';
+        return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", chats='" + chatEntities + '\'' + '}';
     }
 
     @Override
@@ -61,6 +73,6 @@ public class UserEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password);
+        return Objects.hash(username, password, chatEntities);
     }
 }
