@@ -1,10 +1,15 @@
 package com.example.webapp.services;
 
 import com.example.webapp.dtos.UserDto;
+import com.example.webapp.models.ChatEntity;
+import com.example.webapp.models.UserEntity;
 import com.example.webapp.repositories.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService{
@@ -43,6 +48,10 @@ public class UserService implements IUserService{
         return new UserDto(userRepository.findOne(id));
     }
 
+    public List<ChatEntity> getChatsByUser(String userId){
+        UserEntity user = userRepository.findOne(userId);
+        return user.getChats();
+    }
     @Override
     public long count() {
         return userRepository.count();

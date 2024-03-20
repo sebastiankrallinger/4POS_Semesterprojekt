@@ -8,18 +8,12 @@
     <script src="/mainPage.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="chats">
-        <h1>Deine Chats</h1>
-        <div class="chat active">Chat 1</div>
-        <div class="chat">Chat 2</div>
-        <div class="chat">Chat 3</div>
+    <div class="container" onload="getChats()">
+        <div class="chats" id="chatList">
+
+        </div>
+        <div class="messages" id="messageContainer">
+        </div>
     </div>
-    <div class="messages">
-        <div class="message">Nachricht 1</div>
-        <div class="message">Nachricht 2</div>
-        <div class="message">Nachricht 3</div>
-    </div>
-</div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.example.webapp.controller;
 
 import com.example.webapp.dtos.UserDto;
+import com.example.webapp.models.ChatEntity;
+import com.example.webapp.models.UserEntity;
 import com.example.webapp.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +25,13 @@ public class UserController {
     @PostMapping("user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto postUser(@RequestBody UserDto userDto) {
-        return userService.save(userDto);
-    }
-
-    @PostMapping("users")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<UserDto> postUsers(@RequestBody List<UserDto> userEntities) {
-        return userService.saveAll(userEntities);
+        UserEntity user = userDto.toUserEntity();
+        boolean existingUser = userDto.toUserEntity().equals(user);
+        if (existingUser == true) {
+            return userDto;
+        } else {
+            return userService.save(userDto);
+        }
     }
 
     @GetMapping("users")
@@ -42,6 +44,10 @@ public class UserController {
         UserDto userDTO = userService.findOne(id);
         if (userDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(userDTO);
+    }
+    @GetMapping("/users/{userId}/chats")
+    public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
+        return userService.getChatsByUser(userId);
     }
 
     @GetMapping("users/count")
