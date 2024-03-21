@@ -26,12 +26,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto postUser(@RequestBody UserDto userDto) {
         UserEntity user = userDto.toUserEntity();
-        boolean existingUser = userDto.toUserEntity().equals(user);
-        if (existingUser == true) {
-            return userDto;
-        } else {
-            return userService.save(userDto);
+        List<UserDto> users = getUsers();
+        for (UserDto u:users) {
+            boolean existingUser = user.equals(u.toUserEntity());
+            if (existingUser == true) {
+                return userDto;
+            }
         }
+        return userService.save(userDto);
     }
 
     @GetMapping("users")
@@ -47,6 +49,7 @@ public class UserController {
     }
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
+        System.out.println(userService.getChatsByUser(userId));
         return userService.getChatsByUser(userId);
     }
 
