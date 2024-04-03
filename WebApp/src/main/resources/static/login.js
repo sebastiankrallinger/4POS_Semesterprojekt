@@ -14,7 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 201) {
                 console.log('User saved');
+                document.getElementById("username-info").hidden = false;
+                document.getElementById("username-info").innerText = "";
                 window.location.href = '/app/mainPage';
+            }else {
+                console.log('Passwort Falsch')
+                document.getElementById("username-info").hidden = true;
+                document.getElementById("username-info").innerText = "Falsches Passwort - erneut versuchen";
             }
         };
         xhr.send(JSON.stringify(data));

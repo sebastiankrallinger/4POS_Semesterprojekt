@@ -64,12 +64,30 @@ public class UserEntity {
         return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", chats='" + chatEntities + '\'' + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsUsername(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity userEntity = (UserEntity) o;
-        return Objects.equals(username, userEntity.username) && Objects.equals(password, userEntity.password);
+        return Objects.equals(username, userEntity.username);
+    }
+
+    public boolean equalsPassword(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity userEntity = (UserEntity) o;
+        return Objects.equals(password, userEntity.password);
+    }
+
+    public boolean checkPassword(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity userEntity = (UserEntity) o;
+        if (equalsUsername(userEntity)){
+            if (equalsPassword(userEntity)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

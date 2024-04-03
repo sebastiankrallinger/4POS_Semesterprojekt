@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,12 +29,18 @@ public class UserController {
         UserEntity user = userDto.toUserEntity();
         List<UserDto> users = getUsers();
         for (UserDto u:users) {
-            boolean existingUser = user.equals(u.toUserEntity());
+            boolean existingUser = user.equalsUsername(u.toUserEntity());
             if (existingUser == true) {
-                return userDto;
+                if (user.checkPassword(u.toUserEntity()) == true){
+                    System.out.println("Passwort richtig!");
+                    return userDto;
+                }else {
+                    System.out.println("Passwort falsch!");
+                }
             }
         }
-        return userService.save(userDto);
+        //return userService.save(userDto);
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Anmeldeinformationen ungültig");
     }
 
     @GetMapping("users")

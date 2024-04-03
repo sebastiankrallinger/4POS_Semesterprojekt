@@ -61,6 +61,12 @@ body{
     font-size: 20px;
 }
 
+.info-box{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
 .panel .remember-forgot{
     display: flex;
     justify-content: space-between;
