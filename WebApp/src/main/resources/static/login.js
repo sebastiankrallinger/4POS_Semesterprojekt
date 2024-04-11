@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('User saved');
                 document.getElementById("username-info").hidden = false;
                 document.getElementById("username-info").innerText = "";
-                window.location.href = '/app/mainPage';
+                window.location.href = '/app/mainPage?username=' + username;
             }else {
                 console.log('Passwort Falsch')
                 document.getElementById("username-info").hidden = true;

@@ -3,8 +3,11 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function getChats() {
-    var userId = getUserId()
-    fetch(`/app/users/${userId}/chats`)
+    getUserId()
+        .then(userId => {
+            console.log(userId);
+            return fetch(`/app/users/${userId}/chats`);
+        })
         .then(response => response.json())
         .then(chats => {
             console.log(chats)
@@ -45,5 +48,25 @@ function showMessages(messages) {
 }
 
 function getUserId(){
-    return "65fb02471c1c8178a022bed3";
+    var username = getParameterByName('username');
+    return fetch(`/app/users`)
+        .then(response => response.json())
+        .then(users => {
+            for (let user of users) {
+                if (user.username === username) {
+                    return user.id;
+                }
+            }
+            throw new Error('Benutzer nicht gefunden');
+        });
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
