@@ -40,11 +40,13 @@ function showMessages(messages) {
     const messageListElement = document.getElementById('messageList');
     messageListElement.innerHTML = '';
     console.log(messages)
-    messages.forEach(message => {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = message.message;
-        messageListElement.appendChild(messageElement);
-    });
+    if (messages != null) {
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message.message;
+            messageListElement.appendChild(messageElement);
+        });
+    }
 }
 
 function getUserId(){
@@ -90,5 +92,28 @@ function addChat(){
         })
         .catch(error => {
             console.error('Fehler beim Hinzufügen des Chats:', error);
+        });
+}
+
+function addMsg(){
+    getUserId()
+        .then(userId => {
+            const msg = prompt('Message:');
+            let chatname = "test4";
+            if (msg) {
+                return fetch(`/app/addMsg?id=${userId}&chatname=${chatname}&msg=${encodeURIComponent(msg)}`, {
+                    method: 'PUT'
+                });
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                showMessages();
+            } else {
+                throw new Error('Fehler beim Hinzufügen der Msg.');
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Hinzufügen der Msg:', error);
         });
 }

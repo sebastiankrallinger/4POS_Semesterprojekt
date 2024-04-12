@@ -2,6 +2,7 @@ package com.example.webapp.services;
 
 import com.example.webapp.dtos.UserDto;
 import com.example.webapp.models.ChatEntity;
+import com.example.webapp.models.MessageEntity;
 import com.example.webapp.models.UserEntity;
 import com.example.webapp.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -89,10 +90,26 @@ public class UserService implements IUserService{
         if (chats != null){
             chats.add(new ChatEntity(chatName, null));
         }else {
-            chats = new ArrayList<ChatEntity>();
+            chats = new ArrayList<>();
             chats.add(new ChatEntity(chatName, null));
         }
         entity.setChats(chats);
+        return new UserDto(userRepository.update(entity));
+    }
+
+    public UserDto updateMsg(UserDto userDto, String id, String chat, String msg){
+        UserEntity entity = userDto.toUserEntity();
+        List<ChatEntity> chats = entity.getChats();
+        for (ChatEntity c:chats) {
+            if (c.getBezeichnung().equals(chat)){
+                List<MessageEntity> msgs = c.getMessages();
+                if (msgs == null){
+                    msgs = new ArrayList<>();
+                }
+                msgs.add(new MessageEntity(msg));
+                c.setMessages(msgs);
+            }
+        }
         return new UserDto(userRepository.update(entity));
     }
 }

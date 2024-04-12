@@ -80,6 +80,12 @@ public class UserController {
         userService.updateChats(getUser(userId), chatName);
     }
 
+    @PutMapping("addMsg")
+    @ResponseBody
+    public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg) {
+        userService.updateMsg(getUser(id), id, chatname, msg);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public final Exception handleAllExceptions(RuntimeException e) {
