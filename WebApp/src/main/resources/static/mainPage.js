@@ -70,3 +70,25 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+function addChat(){
+    getUserId()
+        .then(userId => {
+            const chatName = prompt('Chat-Name:');
+            if (chatName) {
+                return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}`, {
+                    method: 'PUT'
+                });
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                getChats();
+            } else {
+                throw new Error('Fehler beim Hinzufügen des Chats.');
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Hinzufügen des Chats:', error);
+        });
+}

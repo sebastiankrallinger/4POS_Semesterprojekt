@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,5 +81,18 @@ public class UserService implements IUserService{
     @Override
     public long update(List<UserDto> userEntities) {
         return userRepository.update(userEntities.stream().map(UserDto::toUserEntity).toList());
+    }
+
+    public UserDto updateChats(UserDto userDto, String chatName){
+        UserEntity entity = userDto.toUserEntity();
+        List<ChatEntity> chats = entity.getChats();
+        if (chats != null){
+            chats.add(new ChatEntity(chatName, null));
+        }else {
+            chats = new ArrayList<ChatEntity>();
+            chats.add(new ChatEntity(chatName, null));
+        }
+        entity.setChats(chats);
+        return new UserDto(userRepository.update(entity));
     }
 }

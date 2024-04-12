@@ -7,7 +7,6 @@ import com.example.webapp.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -49,10 +48,10 @@ public class UserController {
     }
 
     @GetMapping("user/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable String id) {
+    public UserDto getUser(@PathVariable String id) {
         UserDto userDTO = userService.findOne(id);
-        if (userDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(userDTO);
+        if (userDTO == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User nicht gefunden");;
+        return userDTO;
     }
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
@@ -73,6 +72,12 @@ public class UserController {
     @PutMapping("user")
     public UserDto putUser(@RequestBody UserDto userDTO) {
         return userService.update(userDTO);
+    }
+
+    @PutMapping("addChat")
+    @ResponseBody
+    public void addChat(@RequestParam String userId, @RequestParam String chatName) {
+        userService.updateChats(getUser(userId), chatName);
     }
 
     @ExceptionHandler(RuntimeException.class)
