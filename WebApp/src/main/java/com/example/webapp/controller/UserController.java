@@ -83,7 +83,7 @@ public class UserController {
     @PutMapping("addMsg")
     @ResponseBody
     public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg) {
-        userService.updateMsg(getUser(id), id, chatname, msg);
+        userService.updateMsg(getUser(id), chatname, msg);
     }
 
     @ExceptionHandler(RuntimeException.class)

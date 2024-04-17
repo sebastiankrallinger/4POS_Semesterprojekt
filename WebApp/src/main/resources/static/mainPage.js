@@ -1,3 +1,5 @@
+let active_chat;
+
 document.addEventListener("DOMContentLoaded", function() {
     getChats();
 });
@@ -17,6 +19,7 @@ function getChats() {
             console.error('Fehler beim Abrufen der Chats:', error);
         });
 }
+
 function showChats(chats){
     const chatListElement = document.getElementById('chatList');
     chatListElement.innerHTML = '';
@@ -29,8 +32,13 @@ function showChats(chats){
         const chatButton = document.createElement('button');
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
         chatButton.classList.add('chat-button');
+        if (active_chat != null){
+            active_chat = chat;
+            showMessages(active_chat.messages);
+        }
         chatButton.addEventListener('click', () => {
-            showMessages(chat.messages);
+            active_chat = chat;
+            showMessages(active_chat.messages);
         });
         chatListElement.appendChild(chatButton);
     });
@@ -99,21 +107,20 @@ function addMsg(){
     getUserId()
         .then(userId => {
             const msg = prompt('Message:');
-            let chatname = "test4";
             if (msg) {
-                return fetch(`/app/addMsg?id=${userId}&chatname=${chatname}&msg=${encodeURIComponent(msg)}`, {
+                return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}`, {
                     method: 'PUT'
                 });
             }
         })
         .then(response => {
             if (response.ok) {
-                showMessages();
+                return getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen der Msg.');
             }
         })
         .catch(error => {
             console.error('Fehler beim Hinzufügen der Msg:', error);
-        });
+        })
 }

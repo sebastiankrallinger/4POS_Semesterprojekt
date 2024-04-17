@@ -97,7 +97,7 @@ public class UserService implements IUserService{
         return new UserDto(userRepository.update(entity));
     }
 
-    public UserDto updateMsg(UserDto userDto, String id, String chat, String msg){
+    public UserDto updateMsg(UserDto userDto, String chat, String msg){
         UserEntity entity = userDto.toUserEntity();
         List<ChatEntity> chats = entity.getChats();
         for (ChatEntity c:chats) {
