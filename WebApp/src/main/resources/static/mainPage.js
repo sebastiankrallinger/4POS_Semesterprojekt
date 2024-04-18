@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function() {
 function getChats() {
     getUserId()
         .then(userId => {
-            console.log(userId);
+            //console.log(userId);
             return fetch(`/app/users/${userId}/chats`);
         })
         .then(response => response.json())
         .then(chats => {
-            console.log(chats)
+            //console.log(chats)
             showChats(chats);
         })
         .catch(error => {
@@ -32,10 +32,6 @@ function showChats(chats){
         const chatButton = document.createElement('button');
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
         chatButton.classList.add('chat-button');
-        if (active_chat != null){
-            active_chat = chat;
-            showMessages(active_chat.messages);
-        }
         chatButton.addEventListener('click', () => {
             active_chat = chat;
             showMessages(active_chat.messages);
@@ -47,7 +43,7 @@ function showChats(chats){
 function showMessages(messages) {
     const messageListElement = document.getElementById('messageList');
     messageListElement.innerHTML = '';
-    console.log(messages)
+    //console.log(messages)
     if (messages != null) {
         messages.forEach(message => {
             const messageElement = document.createElement('div');
@@ -115,7 +111,7 @@ function addMsg(){
         })
         .then(response => {
             if (response.ok) {
-                return getChats();
+                getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen der Msg.');
             }
