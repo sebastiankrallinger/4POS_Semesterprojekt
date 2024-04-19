@@ -59,6 +59,12 @@ public class UserController {
         return userService.getChatsByUser(userId);
     }
 
+    @GetMapping("/users/{userId}/chat/{chatId}")
+    public ChatEntity getChatByUser(@PathVariable String userId, @PathVariable String chatId) {
+        System.out.println(userService.getChatByUser(userId, chatId));
+        return userService.getChatByUser(userId, chatId);
+    }
+
     @GetMapping("users/count")
     public Long getCount() {
         return userService.count();

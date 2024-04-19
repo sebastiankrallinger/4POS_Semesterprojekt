@@ -54,6 +54,17 @@ public class UserService implements IUserService{
         UserEntity user = userRepository.findOne(userId);
         return user.getChats();
     }
+
+    public ChatEntity getChatByUser(String userId, String chatId){
+        UserEntity user = userRepository.findOne(userId);
+        List<ChatEntity> chats = user.getChats();
+        for (ChatEntity c:chats) {
+            if (chatId.equals(c.getBezeichnung())){
+                return c;
+            }
+        }
+        return null;
+    }
     @Override
     public long count() {
         return userRepository.count();
