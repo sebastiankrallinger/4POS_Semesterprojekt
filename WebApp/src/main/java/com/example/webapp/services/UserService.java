@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,16 +101,16 @@ public class UserService implements IUserService{
         UserEntity entity = userDto.toUserEntity();
         List<ChatEntity> chats = entity.getChats();
         if (chats != null){
-            chats.add(new ChatEntity(chatName, null));
+            chats.add(new ChatEntity(chatName, null, "66261ae57b86950a63bfa79c"));
         }else {
             chats = new ArrayList<>();
-            chats.add(new ChatEntity(chatName, null));
+            chats.add(new ChatEntity(chatName, null, "66261ae57b86950a63bfa79c"));
         }
         entity.setChats(chats);
         return new UserDto(userRepository.update(entity));
     }
 
-    public UserDto updateMsg(UserDto userDto, String chat, String msg){
+    public UserDto updateMsg(UserDto userDto, String chat, String msg, String date, boolean receiver){
         UserEntity entity = userDto.toUserEntity();
         List<ChatEntity> chats = entity.getChats();
         for (ChatEntity c:chats) {
@@ -117,7 +119,7 @@ public class UserService implements IUserService{
                 if (msgs == null){
                     msgs = new ArrayList<>();
                 }
-                msgs.add(new MessageEntity(msg));
+                msgs.add(new MessageEntity(msg,  receiver, date));
                 c.setMessages(msgs);
             }
         }

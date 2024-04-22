@@ -21,6 +21,10 @@ body {
     position: relative;
 }
 
+.msgReceived{
+    padding-left: 450px;
+}
+
 .addchat{
     background-color: #f5f5f5;
     position: absolute;

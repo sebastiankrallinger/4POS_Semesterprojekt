@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,9 @@ public class UserController {
     public UserDto postUser(@RequestBody UserDto userDto) {
         UserEntity user = userDto.toUserEntity();
         List<UserDto> users = getUsers();
+        if (users.size() == 0){
+            return userService.save(new UserDto(user));
+        }
         for (UserDto u:users) {
             boolean existingUser = user.equalsUsername(u.toUserEntity());
             if (existingUser == true) {
@@ -36,9 +41,10 @@ public class UserController {
                 }else {
                     System.out.println("Passwort falsch!");
                 }
+            } else {
+                return userService.save(new UserDto(user));
             }
         }
-        //return userService.save(userDto);
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Anmeldeinformationen ungültig");
     }
 
@@ -89,8 +95,21 @@ public class UserController {
     @PutMapping("addMsg")
     @ResponseBody
     public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg) {
-        userService.updateMsg(getUser(id), chatname, msg);
+        sendMsg(id, msg, chatname);
+        userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
+    @ResponseBody
+    public void sendMsg(String id, String msg, String chatname) {
+        UserDto user = getUser(id);
+        List<ChatEntity> chats = user.toUserEntity().getChats();
+        for (ChatEntity c:chats) {
+            if(c.getBezeichnung().equals(chatname)){
+                UserDto u = getUser(c.getReceiver());
+                userService.updateMsg(getUser(c.getReceiver()), "testReceiver", msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
+            }
+        }
+    }
+
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

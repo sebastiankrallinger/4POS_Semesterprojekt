@@ -47,9 +47,17 @@ function showMessages(messages) {
     //console.log(messages)
     if (messages != null) {
         messages.forEach(message => {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message.message;
-            messageListElement.appendChild(messageElement);
+            if (message.receiver == false) {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message.message;
+                messageListElement.appendChild(messageElement);
+            }else if (message.receiver == true){
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message.message;
+                messageElement.className = "msgReceived";
+                messageListElement.appendChild(messageElement);
+            }
+
         });
     }
 }

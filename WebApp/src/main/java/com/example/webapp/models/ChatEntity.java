@@ -7,14 +7,16 @@ import java.util.Objects;
 
 public class ChatEntity {
     private String bezeichnung;
+    private String receiver;
     private List<MessageEntity> messageEntities;
 
     public ChatEntity() {
     }
 
-    public ChatEntity(String bezeichnung, List<MessageEntity> messageEntities){
+    public ChatEntity(String bezeichnung, List<MessageEntity> messageEntities, String receiver){
         this.bezeichnung = bezeichnung;
         this.messageEntities = messageEntities;
+        this.receiver = receiver;
     }
 
     public String getBezeichnung() {
@@ -32,6 +34,15 @@ public class ChatEntity {
 
     public ChatEntity setMessages(List<MessageEntity> messageEntities) {
         this.messageEntities = messageEntities;
+        return this;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public ChatEntity setReceiver(String receiver) {
+        this.receiver = receiver;
         return this;
     }
 
