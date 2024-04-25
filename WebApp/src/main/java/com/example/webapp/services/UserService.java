@@ -5,6 +5,7 @@ import com.example.webapp.models.ChatEntity;
 import com.example.webapp.models.MessageEntity;
 import com.example.webapp.models.UserEntity;
 import com.example.webapp.repositories.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,17 +98,31 @@ public class UserService implements IUserService{
         return userRepository.update(userEntities.stream().map(UserDto::toUserEntity).toList());
     }
 
-    public UserDto updateChats(UserDto userDto, String chatName){
-        UserEntity entity = userDto.toUserEntity();
-        List<ChatEntity> chats = entity.getChats();
-        if (chats != null){
-            chats.add(new ChatEntity(chatName, null, "66261ae57b86950a63bfa79c"));
+    public UserDto updateChats(UserDto sender, String chatName){
+        UserEntity entity_sender = sender.toUserEntity();
+        List<ChatEntity> chats_sender = entity_sender.getChats();
+
+        String receiver = getChatByUser(entity_sender.getId().toString(), chatName).getReceiver();
+        UserEntity entity_receiver = findOne(receiver).toUserEntity();
+
+        List<ChatEntity> chat_receiver = entity_receiver.getChats();
+
+        if (chats_sender != null){
+            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString()));
         }else {
-            chats = new ArrayList<>();
-            chats.add(new ChatEntity(chatName, null, "66261ae57b86950a63bfa79c"));
+            chats_sender = new ArrayList<>();
+            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString()));
         }
-        entity.setChats(chats);
-        return new UserDto(userRepository.update(entity));
+        if (chat_receiver != null){
+            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
+        }else {
+            chats_sender = new ArrayList<>();
+            chats_sender.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
+        }
+        entity_sender.setChats(chats_sender);
+        entity_receiver.setChats(chat_receiver);
+        userRepository.update(entity_receiver);
+        return new UserDto(userRepository.update(entity_sender));
     }
 
     public UserDto updateMsg(UserDto userDto, String chat, String msg, String date, boolean receiver){
