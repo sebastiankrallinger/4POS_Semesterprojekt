@@ -74,6 +74,10 @@ public class UserRepository implements IUserRepository{
         return userCollection.find(eq("_id", new ObjectId(id))).first();
     }
 
+    public UserEntity getUserId(String username) {
+        return userCollection.find(eq("username", username)).first();
+    }
+
     @Override
     public long count() {
         return userCollection.countDocuments();

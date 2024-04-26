@@ -88,8 +88,8 @@ public class UserController {
 
     @PutMapping("addChat")
     @ResponseBody
-    public void addChat(@RequestParam String userId, @RequestParam String chatName) {
-        userService.updateChats(getUser(userId), chatName);
+    public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
+        userService.updateChats(getUser(userId), chatName, receiver);
     }
 
     @PutMapping("addMsg")

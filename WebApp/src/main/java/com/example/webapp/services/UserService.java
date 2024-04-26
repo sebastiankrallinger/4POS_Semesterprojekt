@@ -53,6 +53,10 @@ public class UserService implements IUserService{
         return new UserDto(userRepository.findOne(id));
     }
 
+    public UserDto getUserId(String username) {
+        return new UserDto(userRepository.getUserId(username));
+    }
+
     public List<ChatEntity> getChatsByUser(String userId){
         UserEntity user = userRepository.findOne(userId);
         return user.getChats();
@@ -98,12 +102,10 @@ public class UserService implements IUserService{
         return userRepository.update(userEntities.stream().map(UserDto::toUserEntity).toList());
     }
 
-    public UserDto updateChats(UserDto sender, String chatName){
+    public UserDto updateChats(UserDto sender, String chatName, String receiver){
         UserEntity entity_sender = sender.toUserEntity();
         List<ChatEntity> chats_sender = entity_sender.getChats();
-
-        String receiver = getChatByUser(entity_sender.getId().toString(), chatName).getReceiver();
-        UserEntity entity_receiver = findOne(receiver).toUserEntity();
+        UserEntity entity_receiver = getUserId(receiver).toUserEntity();
 
         List<ChatEntity> chat_receiver = entity_receiver.getChats();
 
@@ -116,8 +118,8 @@ public class UserService implements IUserService{
         if (chat_receiver != null){
             chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
         }else {
-            chats_sender = new ArrayList<>();
-            chats_sender.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
+            chat_receiver = new ArrayList<>();
+            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
         }
         entity_sender.setChats(chats_sender);
         entity_receiver.setChats(chat_receiver);

@@ -1,4 +1,3 @@
-
 let active_chat;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -9,11 +8,18 @@ function getChats() {
     getUserId()
         .then(userId => {
             //console.log(userId);
-            return fetch(`/app/users/${userId}/chats`);
+            return fetch(`/app/users/${userId}/chats`)
         })
         .then(response => response.json())
         .then(chats => {
-            //console.log(chats)
+            //console.log("Chats erhalten:", chats);
+            if (!chats){
+                const chatListElement = document.getElementById('chatList');
+                const noChatElement = document.createElement('p');
+                noChatElement.textContent = 'Keine Chats verfügbar.';
+                chatListElement.appendChild(noChatElement);
+                return;
+            }
             showChats(chats);
         })
         .catch(error => {
@@ -89,9 +95,10 @@ function getParameterByName(name, url) {
 function addChat(){
     getUserId()
         .then(userId => {
+            const receiver = prompt('Reveiver: ')
             const chatName = prompt('Chat-Name:');
             if (chatName) {
-                return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}`, {
+                return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
                     method: 'PUT'
                 });
             }
