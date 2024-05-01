@@ -49,17 +49,6 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public List<UserEntity> saveAll(List<UserEntity> userEntities) {
-        try (ClientSession clientSession = client.startSession()) {
-            return clientSession.withTransaction(() -> {
-                userEntities.forEach(p -> p.setId(new ObjectId()));
-                userCollection.insertMany(clientSession, userEntities);
-                return userEntities;
-            }, txnOptions);
-        }
-    }
-
-    @Override
     public List<UserEntity> findAll() {
         return userCollection.find().into(new ArrayList<>());
     }

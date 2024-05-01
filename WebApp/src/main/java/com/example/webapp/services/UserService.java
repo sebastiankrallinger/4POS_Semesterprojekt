@@ -5,16 +5,9 @@ import com.example.webapp.models.ChatEntity;
 import com.example.webapp.models.MessageEntity;
 import com.example.webapp.models.UserEntity;
 import com.example.webapp.repositories.UserRepository;
-import org.apache.catalina.User;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService{
@@ -71,10 +64,6 @@ public class UserService implements IUserService{
             }
         }
         return null;
-    }
-    @Override
-    public long count() {
-        return userRepository.count();
     }
 
     @Override

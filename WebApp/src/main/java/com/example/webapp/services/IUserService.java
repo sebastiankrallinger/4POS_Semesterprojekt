@@ -15,8 +15,6 @@ public interface IUserService {
 
     UserDto findOne(String id);
 
-    long count();
-
     long delete(String id);
 
     long delete(List<String> ids);

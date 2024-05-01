@@ -24,6 +24,7 @@ public class UserController {
 
         this.userService = userService;
     }
+
     @PostMapping("user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto postUser(@RequestBody UserDto userDto) {
@@ -69,11 +70,6 @@ public class UserController {
     public ChatEntity getChatByUser(@PathVariable String userId, @PathVariable String chatId) {
         System.out.println(userService.getChatByUser(userId, chatId));
         return userService.getChatByUser(userId, chatId);
-    }
-
-    @GetMapping("users/count")
-    public Long getCount() {
-        return userService.count();
     }
 
     @DeleteMapping("user/{id}")

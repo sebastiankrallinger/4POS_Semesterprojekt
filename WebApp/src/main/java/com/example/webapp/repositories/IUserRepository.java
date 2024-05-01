@@ -10,8 +10,6 @@ import java.util.List;
 public interface IUserRepository {
     UserEntity save(UserEntity userEntity);
 
-    List<UserEntity> saveAll(List<UserEntity> userEntities);
-
     List<UserEntity> findAll();
 
     List<UserEntity> findAll(List<String> ids);
