@@ -94,8 +94,8 @@ public class UserController {
 
     @PutMapping("addMsg")
     @ResponseBody
-    public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg) {
-        sendMsg(id, msg, chatname);
+    public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg, @RequestParam String receiver) {
+        sendMsg(receiver, msg, chatname);
         userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
     @ResponseBody
@@ -104,8 +104,7 @@ public class UserController {
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {
             if(c.getBezeichnung().equals(chatname)){
-                UserDto u = getUser(c.getReceiver());
-                userService.updateMsg(getUser(c.getReceiver()), "testReceiver", msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
+                userService.updateMsg(user, chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), true);
             }
         }
     }

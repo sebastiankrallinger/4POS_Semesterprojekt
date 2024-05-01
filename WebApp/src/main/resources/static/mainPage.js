@@ -120,7 +120,7 @@ function addMsg(){
         .then(userId => {
             const msg = prompt('Message:');
             if (msg) {
-                return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}`, {
+                return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}&receiver=${active_chat.receiver}`, {
                     method: 'PUT'
                 });
             }
