@@ -1,4 +1,4 @@
-let active_chat;
+let active_chat = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     getChats();
@@ -28,6 +28,7 @@ function getChats() {
 }
 
 function showChats(chats){
+    //console.log(chats)
     const chatListElement = document.getElementById('chatList');
     chatListElement.innerHTML = '';
 
@@ -36,6 +37,11 @@ function showChats(chats){
     chatListElement.appendChild(headerElement);
 
     chats.forEach(chat => {
+        console.log(chat.bezeichnung + " - " + active_chat)
+        if (active_chat != null && active_chat.bezeichnung == chat.bezeichnung){
+            active_chat = chat;
+            showMessages(active_chat.messages);
+        }
         const chatButton = document.createElement('button');
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
         chatButton.classList.add('chat-button');
@@ -48,6 +54,7 @@ function showChats(chats){
 }
 
 function showMessages(messages) {
+    console.log(active_chat)
     const messageListElement = document.getElementById('messageList');
     messageListElement.innerHTML = '';
     //console.log(messages)
