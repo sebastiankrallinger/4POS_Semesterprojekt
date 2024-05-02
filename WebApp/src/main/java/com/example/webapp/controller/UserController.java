@@ -30,11 +30,12 @@ public class UserController {
     public UserDto postUser(@RequestBody UserDto userDto) {
         UserEntity user = userDto.toUserEntity();
         List<UserDto> users = getUsers();
+        boolean existingUser = false;
         if (users.size() == 0){
             return userService.save(new UserDto(user));
         }
         for (UserDto u:users) {
-            boolean existingUser = user.equalsUsername(u.toUserEntity());
+            existingUser = user.equalsUsername(u.toUserEntity());
             if (existingUser == true) {
                 if (user.checkPassword(u.toUserEntity()) == true){
                     System.out.println("Passwort richtig!");
@@ -42,9 +43,10 @@ public class UserController {
                 }else {
                     System.out.println("Passwort falsch!");
                 }
-            } else {
-                return userService.save(new UserDto(user));
             }
+        }
+        if (existingUser == false){
+            return userService.save(new UserDto(user));
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Anmeldeinformationen ungültig");
     }
