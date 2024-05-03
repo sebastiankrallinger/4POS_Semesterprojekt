@@ -1,7 +1,9 @@
 package com.example.webapp.controller;
 
+import com.example.webapp.Chat;
 import com.example.webapp.dtos.UserDto;
 import com.example.webapp.models.ChatEntity;
+import com.example.webapp.models.MessageEntity;
 import com.example.webapp.models.UserEntity;
 import com.example.webapp.services.UserService;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import java.util.List;
 public class UserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final UserService userService;
+    public static List<Chat> openChats = new ArrayList<>();
 
     public UserController(UserService userService) {
 
@@ -64,6 +68,7 @@ public class UserController {
     }
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
+        openChats.addAll(userService.getChatsByUser(userId).stream().map(ChatEntity::toChat).toList());
         System.out.println(userService.getChatsByUser(userId));
         return userService.getChatsByUser(userId);
     }
@@ -72,6 +77,12 @@ public class UserController {
     public ChatEntity getChatByUser(@PathVariable String userId, @PathVariable String chatId) {
         System.out.println(userService.getChatByUser(userId, chatId));
         return userService.getChatByUser(userId, chatId);
+    }
+
+    @GetMapping("/users/{userId}/chat/{chatId}")
+    public MessageEntity getMsgsByChat(@PathVariable String chatId) {
+        System.out.println(userService.getMsgsByChat(chatId));
+        return userService.getMsgsByChat(chatId);
     }
 
     @DeleteMapping("user/{id}")

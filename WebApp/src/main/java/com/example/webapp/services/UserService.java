@@ -66,6 +66,10 @@ public class UserService implements IUserService{
         return null;
     }
 
+    public MessageEntity getMsgsByChat(String chatId){
+        return null;
+    }
+
     @Override
     public long delete(String id) {
         return userRepository.delete(id);

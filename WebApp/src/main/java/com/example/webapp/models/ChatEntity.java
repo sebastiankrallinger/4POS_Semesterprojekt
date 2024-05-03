@@ -1,5 +1,6 @@
 package com.example.webapp.models;
 
+import com.example.webapp.Chat;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -62,5 +63,10 @@ public class ChatEntity {
     @Override
     public int hashCode() {
         return Objects.hash(bezeichnung, messageEntities);
+    }
+
+
+    public Chat toChat(){
+        return new Chat(this);
     }
 }
