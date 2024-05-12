@@ -69,7 +69,7 @@ public class UserController {
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
         openChats.addAll(userService.getChatsByUser(userId).stream().map(ChatEntity::toChat).toList());
-        System.out.println(userService.getChatsByUser(userId));
+        //System.out.println(userService.getChatsByUser(userId));
         return userService.getChatsByUser(userId);
     }
 
@@ -79,8 +79,8 @@ public class UserController {
         return userService.getChatByUser(userId, chatId);
     }
 
-    @GetMapping("/users/{userId}/chat/{chatId}")
-    public MessageEntity getMsgsByChat(@PathVariable String chatId) {
+    @GetMapping("/users/{userId}/messages/{chatId}")
+    public MessageEntity getMsgsByChat(@PathVariable String userId, @PathVariable String chatId) {
         System.out.println(userService.getMsgsByChat(chatId));
         return userService.getMsgsByChat(chatId);
     }
@@ -98,7 +98,12 @@ public class UserController {
     @PutMapping("addChat")
     @ResponseBody
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
-        userService.updateChats(getUser(userId), chatName, receiver);
+        for (Chat c:openChats) {
+            if (c.getActive_chat().getBezeichnung().equals(chatName)){
+                c.subscribe(getUser(userId).toUserEntity());
+                c.subscribe(getUser(receiver).toUserEntity());
+            }
+        }
     }
 
     @PutMapping("addMsg")

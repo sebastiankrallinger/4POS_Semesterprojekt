@@ -3,6 +3,7 @@ package com.example.webapp;
 import com.example.webapp.models.ChatEntity;
 import com.example.webapp.models.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
@@ -11,6 +12,7 @@ public class Chat {
 
     public Chat(ChatEntity chat){
         active_chat = chat;
+        chatSubscriber = new ArrayList<>();
     }
 
     public void setActive_chat(ChatEntity chat){
@@ -21,7 +23,7 @@ public class Chat {
         return active_chat;
     }
 
-    public void subscibe(UserEntity user){
+    public void subscribe(UserEntity user){
         chatSubscriber.add(user);
     }
 
