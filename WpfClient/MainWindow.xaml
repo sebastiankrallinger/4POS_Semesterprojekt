@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="TinyWhatsApp" Height="800" Width="1300">
+    <Grid x:Name="GridChats" Margin="0,0,805,0">
+        <ListView x:Name="LstBoxMsgs" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="498,1,-803,-1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
