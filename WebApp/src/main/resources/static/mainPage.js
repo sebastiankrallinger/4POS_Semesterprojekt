@@ -6,7 +6,7 @@ let client = Stomp.over(sock);
 
 client.connect({}, (frame) => {
     console.log("Frame is: " +frame);
-    client.subscribe('/topic/message', (msg) => {
+    client.subscribe('/topic/loadChat', (msg) => {
         //console.log(msg);
         getChats();
     });

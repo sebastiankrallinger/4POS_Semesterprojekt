@@ -103,8 +103,10 @@ public class UserController {
 
     @PutMapping("addChat")
     @ResponseBody
+    @MessageMapping("/chat")
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
         userService.updateChats(getUser(userId), chatName, receiver);
+        messagingTemplate.convertAndSend("/topic/loadChat", chatName);
     }
 
     @PutMapping("addMsg")
@@ -114,9 +116,9 @@ public class UserController {
         userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
     @ResponseBody
-    @MessageMapping("/message")
+    @MessageMapping("/loadChat")
     public void sendMsg(String id, String msg, String chatname) {
-        messagingTemplate.convertAndSend("/topic/message", msg);
+        messagingTemplate.convertAndSend("/topic/loadChat", msg);
         UserDto user = getUser(id);
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {
