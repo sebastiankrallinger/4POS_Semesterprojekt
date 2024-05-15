@@ -6,9 +6,14 @@ import com.example.webapp.models.ChatEntity;
 import com.example.webapp.models.MessageEntity;
 import com.example.webapp.models.UserEntity;
 import com.example.webapp.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,12 +22,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
+@Controller
 @RestController
 @RequestMapping("/app")
 public class UserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final UserService userService;
-    public static List<Chat> openChats = new ArrayList<>();
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public UserController(UserService userService) {
 
@@ -66,7 +74,7 @@ public class UserController {
     }
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
-        openChats.addAll(userService.getChatsByUser(userId).stream().map(ChatEntity::toChat).toList());
+        System.out.println(userService.getChatsByUser(userId));
         //System.out.println(userService.getChatsByUser(userId));
         return userService.getChatsByUser(userId);
     }
@@ -96,12 +104,7 @@ public class UserController {
     @PutMapping("addChat")
     @ResponseBody
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
-        for (Chat c:openChats) {
-            if (c.getActive_chat().getBezeichnung().equals(chatName)){
-                c.subscribe(getUser(userId).toUserEntity());
-                c.subscribe(getUser(receiver).toUserEntity());
-            }
-        }
+        userService.updateChats(getUser(userId), chatName, receiver);
     }
 
     @PutMapping("addMsg")
@@ -111,7 +114,9 @@ public class UserController {
         userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
     @ResponseBody
+    @MessageMapping("/message")
     public void sendMsg(String id, String msg, String chatname) {
+        messagingTemplate.convertAndSend("/topic/message", msg);
         UserDto user = getUser(id);
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {

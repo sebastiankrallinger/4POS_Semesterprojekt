@@ -1,5 +1,17 @@
 let active_chat = null;
 
+let sock = new SockJS('http://localhost:8080/ws');
+
+let client = Stomp.over(sock);
+
+client.connect({}, (frame) => {
+    console.log("Frame is: " +frame);
+    client.subscribe('/topic/message', (msg) => {
+        //console.log(msg);
+        getChats();
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     getChats();
 });
