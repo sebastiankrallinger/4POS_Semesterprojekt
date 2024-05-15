@@ -67,27 +67,6 @@ body{
     margin-bottom: 25px;
 }
 
-.panel .remember-forgot{
-    display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
-}
-
-.remember-forgot label input{
-    accent-color: white;
-    margin-right: 3px;
-}
-
-.remember-forgot a{
-    color: white;
-    text-decoration: none;
-}
-
-.remember-forgot a:hover{
-    text-decoration: underline;
-}
-
 .panel .btn{
     width: 100%;
     height: 45px;
@@ -100,20 +79,4 @@ body{
     font-size: 16px;
     color: #333;
     font-weight: 600;
-}
-
-.panel .register-link{
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.register-link p a{
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link p a:hover{
-    text-decoration: underline;
 }
