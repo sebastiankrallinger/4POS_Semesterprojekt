@@ -23,23 +23,10 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public List<UserDto> saveAll(List<UserDto> userEntities) {
-        return userEntities.stream()
-                .map(UserDto::toUserEntity)
-                .peek(userRepository::save)
-                .map(UserDto::new)
-                .toList();
-    }
-
-    @Override
     public List<UserDto> findAll() {
         return userRepository.findAll().stream().map(UserDto::new).toList();
     }
 
-    @Override
-    public List<UserDto> findAll(List<String> ids) {
-        return userRepository.findAll(ids).stream().map(UserDto::new).toList();
-    }
 
     @Override
     public UserDto findOne(String id) {
@@ -68,31 +55,6 @@ public class UserService implements IUserService{
 
     public MessageEntity getMsgsByChat(String chatId){
         return null;
-    }
-
-    @Override
-    public long delete(String id) {
-        return userRepository.delete(id);
-    }
-
-    @Override
-    public long delete(List<String> ids) {
-        return userRepository.delete(ids);
-    }
-
-    @Override
-    public long deleteAll() {
-        return userRepository.deleteAll();
-    }
-
-    @Override
-    public UserDto update(UserDto userDTO) {
-        return new UserDto(userRepository.update(userDTO.toUserEntity()));
-    }
-
-    @Override
-    public long update(List<UserDto> userEntities) {
-        return userRepository.update(userEntities.stream().map(UserDto::toUserEntity).toList());
     }
 
     public UserDto updateChats(UserDto sender, String chatName, String receiver){

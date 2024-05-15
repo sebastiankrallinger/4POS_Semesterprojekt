@@ -1,12 +1,10 @@
 package com.example.webapp.models;
 
-import org.apache.catalina.User;
 import org.bson.types.ObjectId;
-
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
+//UserEntity mit Eigenschaften, Gettern und Settern
 public class UserEntity {
     private ObjectId id;
     private String username;
@@ -59,11 +57,13 @@ public class UserEntity {
         return this;
     }
 
+    //ToString zum Debugen
     @Override
     public String toString() {
         return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", chats='" + chatEntities + '\'' + '}';
     }
 
+    //Usernamen vergleichen
     public boolean equalsUsername(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -71,6 +71,7 @@ public class UserEntity {
         return Objects.equals(username, userEntity.username);
     }
 
+    //Passwort vergeleichen
     public boolean equalsPassword(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -78,6 +79,7 @@ public class UserEntity {
         return Objects.equals(password, userEntity.password);
     }
 
+    //Methode die beide Vergleiche ausfuehrt
     public boolean checkPassword(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -88,10 +90,5 @@ public class UserEntity {
             }
         }
         return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, password, chatEntities);
     }
 }

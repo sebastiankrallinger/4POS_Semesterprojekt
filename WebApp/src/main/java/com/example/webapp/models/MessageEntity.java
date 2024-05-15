@@ -1,14 +1,8 @@
 package com.example.webapp.models;
 
-import org.bson.types.ObjectId;
-
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 
+//MessageEntity mit Eigenschaften, Gettern und Settern
 public class MessageEntity {
     private String message;
     private boolean receiver;
@@ -51,21 +45,9 @@ public class MessageEntity {
         return this;
     }
 
+    //ToString zum Debugen
     @Override
     public String toString() {
         return "Messsage{" + "Message='" + message + ": " + date + '\'' + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MessageEntity messageEntity = (MessageEntity) o;
-        return Objects.equals(message, messageEntity.message);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(message, date);
     }
 }

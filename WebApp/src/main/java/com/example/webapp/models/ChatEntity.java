@@ -1,11 +1,8 @@
 package com.example.webapp.models;
 
-import com.example.webapp.Chat;
-import org.bson.types.ObjectId;
-
 import java.util.List;
-import java.util.Objects;
 
+//ChatEntity mit Eigenschaften, Gettern und Settern
 public class ChatEntity {
     private String bezeichnung;
     private String receiver;
@@ -47,26 +44,9 @@ public class ChatEntity {
         return this;
     }
 
+    //ToString zum Debugen
     @Override
     public String toString() {
         return "Chat{" + "bezeichnung='" + bezeichnung + "messages='" + messageEntities + '\'' + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChatEntity chatEntity = (ChatEntity) o;
-        return Objects.equals(bezeichnung, chatEntity.bezeichnung);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(bezeichnung, messageEntities);
-    }
-
-
-    public Chat toChat(){
-        return new Chat(this);
     }
 }
