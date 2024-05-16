@@ -18,6 +18,7 @@ namespace WpfClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private User currentUser;
         public MainWindow()
         {
             //Icon setzen
@@ -32,9 +33,8 @@ namespace WpfClient
 
         public async void loadChats()
         {
-            string userId = "6644bb25694ff165bb4e5b03";
             HttpClient httpClient = new HttpClient();
-            string url = $"http://localhost:8080/app/users/{userId}/chats";
+            string url = $"http://localhost:8080/app/users/{currentUser.id}/chats";
 
             try
             {
@@ -62,9 +62,8 @@ namespace WpfClient
 
         private async void LstBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string userId = "6644bb25694ff165bb4e5b03";
             HttpClient httpClient = new HttpClient();
-            string url = $"http://localhost:8080/app/users/{userId}/chats";
+            string url = $"http://localhost:8080/app/users/{currentUser.id}/chats";
 
             try
             {
