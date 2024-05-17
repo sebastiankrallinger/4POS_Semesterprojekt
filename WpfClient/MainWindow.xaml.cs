@@ -19,7 +19,8 @@ namespace WpfClient
     public partial class MainWindow : Window
     {
         private User currentUser;
-        public MainWindow()
+
+        public MainWindow(object user)
         {
             //Icon setzen
             /*BitmapImage icon = new();
@@ -28,6 +29,7 @@ namespace WpfClient
             icon.EndInit();
             Icon = BitmapFrame.Create(icon);*/
             InitializeComponent();
+            currentUser = (User)user;
             loadChats();
         }
 
