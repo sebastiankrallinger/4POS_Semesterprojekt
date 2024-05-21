@@ -6,6 +6,25 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
+      "Apache.NMS/1.5.1": {
+        "runtime": {
+          "lib/net40/Apache.NMS.dll": {
+            "assemblyVersion": "1.5.1.2739",
+            "fileVersion": "1.5.1.2739"
+          }
+        }
+      },
+      "Apache.NMS.Stomp/1.5.4": {
+        "dependencies": {
+          "Apache.NMS": "1.5.1"
+        },
+        "runtime": {
+          "lib/net40/Apache.NMS.Stomp.dll": {
+            "assemblyVersion": "1.5.4.3215",
+            "fileVersion": "1.5.4.3215"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.3": {
         "runtime": {
           "lib/net6.0/Newtonsoft.Json.dll": {
@@ -17,6 +36,20 @@
     }
   },
   "libraries": {
+    "Apache.NMS/1.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dFTIktMcQEW4lq6xZz5oUipr9NktlTMfgmjyGPm6X8B+2TjItDGXKTJpbUYcBchwLH+m7PGqhE+YbA/iTx/AGg==",
+      "path": "apache.nms/1.5.1",
+      "hashPath": "apache.nms.1.5.1.nupkg.sha512"
+    },
+    "Apache.NMS.Stomp/1.5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qbWF33+VQw+5JNPneilOp/pndKCKJgvsD7uv8gmFvQDtWezN3q+pMWis9arC7Zh9dcXtkvalCq+KZrZ2PbqUjw==",
+      "path": "apache.nms.stomp/1.5.4",
+      "hashPath": "apache.nms.stomp.1.5.4.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.3": {
       "type": "package",
       "serviceable": true,

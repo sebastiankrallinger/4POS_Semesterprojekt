@@ -48,17 +48,17 @@ namespace WpfClient
             {
                 HttpResponseMessage response = await httpClient.PostAsync("http://localhost:8080/app/user", content);
 
-                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                if (response.IsSuccessStatusCode && response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    User user = new User
-                    {
-                        id = "6644c57b09782a173ed4ac14",
-                        username = Username,
-                        password = Password
-                    };
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    User user = JsonConvert.DeserializeObject<User>(responseBody);
                     MainWindow mainWindow = new MainWindow(user);
                     mainWindow.Show();
                     this.Close();
+                }
+                else
+                {
+                    throw new Exception("Falsches Passwort!");
                 }
             }
             catch (Exception ex)

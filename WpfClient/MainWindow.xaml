@@ -19,6 +19,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox x:Name="LstBoxMsgs" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="296,0,-5,0" Grid.Column="2"/>
+        <ListBox x:Name="LstBoxMsgs" Margin="296,0,-5,0" Grid.Column="2"/>
+        <TextBox x:Name="txtNewMsg" Grid.Column="2" HorizontalAlignment="Left" Margin="296,727,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="643" Height="57" Visibility="Hidden"/>
+        <Button x:Name="btnSend" Grid.Column="2" Content="Send" HorizontalAlignment="Left" Height="48" Margin="944,726,0,0" VerticalAlignment="Top" Width="168" Click="btnSend_Click" Visibility="Hidden"/>
     </Grid>
 </Window>

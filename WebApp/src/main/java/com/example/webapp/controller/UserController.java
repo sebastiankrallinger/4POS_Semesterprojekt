@@ -51,9 +51,10 @@ public class UserController {
             if (existingUser == true) {
                 if (user.checkPassword(u.toUserEntity()) == true){
                     System.out.println("Passwort richtig!");
-                    return userDto;
+                    return u;
                 }else {
                     System.out.println("Passwort falsch!");
+                    break;
                 }
             }
         }

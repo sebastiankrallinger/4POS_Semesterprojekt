@@ -1,15 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Apache.NMS;
+using Newtonsoft.Json;
 using System.Net.Http;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfClient
 {
@@ -19,6 +12,7 @@ namespace WpfClient
     public partial class MainWindow : Window
     {
         private User currentUser;
+        private Chat activeChat;
 
         public MainWindow(object user)
         {
@@ -45,7 +39,7 @@ namespace WpfClient
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                
+
                 List<Chat> chats = JsonConvert.DeserializeObject<List<Chat>>(responseBody);
 
                 LstBoxChats.Items.Clear();
@@ -59,11 +53,13 @@ namespace WpfClient
             {
                 MessageBox.Show($"Fehler beim Abrufen der Chats: {ex.Message}");
             }
-            
+
         }
 
         private async void LstBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            txtNewMsg.Visibility = Visibility.Visible;
+            btnSend.Visibility = Visibility.Visible;
             HttpClient httpClient = new HttpClient();
             string url = $"http://localhost:8080/app/users/{currentUser.id}/chats";
 
@@ -78,11 +74,12 @@ namespace WpfClient
 
                 foreach (Chat c in chats)
                 {
-                    if(c.bezeichnung == e.AddedItems[0].ToString())
+                    if (e.AddedItems[0].ToString() == c.bezeichnung)
                     {
+                        activeChat = c;
                         LstBoxMsgs.Items.Clear();
-                        List<Message> msgs = c.messages;
-                        foreach(Message m in msgs)
+                        List<Message> msgs = activeChat.messages;
+                        foreach (Message m in msgs)
                         {
                             LstBoxMsgs.Items.Add(m.message);
                         }
@@ -92,6 +89,42 @@ namespace WpfClient
             catch (HttpRequestException ex)
             {
                 MessageBox.Show($"Fehler beim Abrufen der Messages: {ex.Message}");
+            }
+        }
+
+        private async void btnSend_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtNewMsg.Text != null)
+            {
+                HttpClient httpClient = new HttpClient();
+                string url = $"http://localhost:8080/app/addMsg?id={currentUser.id}&chatname={activeChat.bezeichnung}&msg={txtNewMsg.Text}&receiver={activeChat.receiver}";
+
+                try
+                {
+                    HttpResponseMessage response = await httpClient.PutAsync(url, null);
+                    if (response.IsSuccessStatusCode) 
+                    {
+                        url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
+                        response = await httpClient.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
+
+                        LstBoxMsgs.Items.Clear();
+                        List<Message> msgs = activeChat.messages;
+                        foreach (Message m in msgs)
+                        {
+                            LstBoxMsgs.Items.Add(m.message);
+                        }
+                    }
+                    
+
+                }
+                catch (HttpRequestException ex)
+                {
+                    MessageBox.Show($"Fehler beim Senden der Messages: {ex.Message}");
+                }
             }
         }
     }

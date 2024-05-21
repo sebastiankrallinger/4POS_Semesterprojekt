@@ -2,6 +2,35 @@
   "version": 3,
   "targets": {
     "net8.0-windows7.0": {
+      "Apache.NMS/1.5.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Apache.NMS.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/net40/Apache.NMS.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
+      "Apache.NMS.Stomp/1.5.4": {
+        "type": "package",
+        "dependencies": {
+          "Apache.NMS": "1.5.1"
+        },
+        "compile": {
+          "lib/net40/Apache.NMS.Stomp.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net40/Apache.NMS.Stomp.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
@@ -18,6 +47,52 @@
     }
   },
   "libraries": {
+    "Apache.NMS/1.5.1": {
+      "sha512": "dFTIktMcQEW4lq6xZz5oUipr9NktlTMfgmjyGPm6X8B+2TjItDGXKTJpbUYcBchwLH+m7PGqhE+YbA/iTx/AGg==",
+      "type": "package",
+      "path": "apache.nms/1.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "apache.nms.1.5.1.nupkg.sha512",
+        "apache.nms.nuspec",
+        "lib/net20-cf/Apache.NMS.dll",
+        "lib/net20-cf/Apache.NMS.pdb",
+        "lib/net20/Apache.NMS.dll",
+        "lib/net20/Apache.NMS.pdb",
+        "lib/net35/Apache.NMS.dll",
+        "lib/net35/Apache.NMS.pdb",
+        "lib/net40/Apache.NMS.dll",
+        "lib/net40/Apache.NMS.pdb"
+      ]
+    },
+    "Apache.NMS.Stomp/1.5.4": {
+      "sha512": "qbWF33+VQw+5JNPneilOp/pndKCKJgvsD7uv8gmFvQDtWezN3q+pMWis9arC7Zh9dcXtkvalCq+KZrZ2PbqUjw==",
+      "type": "package",
+      "path": "apache.nms.stomp/1.5.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "apache.nms.stomp.1.5.4.nupkg.sha512",
+        "apache.nms.stomp.nuspec",
+        "lib/net20-cf/Apache.NMS.Stomp.dll",
+        "lib/net20-cf/Apache.NMS.Stomp.pdb",
+        "lib/net20-cf/Apache.NMS.Stomp.xml",
+        "lib/net20/Apache.NMS.Stomp.dll",
+        "lib/net20/Apache.NMS.Stomp.pdb",
+        "lib/net20/Apache.NMS.Stomp.xml",
+        "lib/net35/Apache.NMS.Stomp.dll",
+        "lib/net35/Apache.NMS.Stomp.pdb",
+        "lib/net35/Apache.NMS.Stomp.xml",
+        "lib/net40/Apache.NMS.Stomp.dll",
+        "lib/net40/Apache.NMS.Stomp.pdb",
+        "lib/net40/Apache.NMS.Stomp.xml"
+      ]
+    },
     "Newtonsoft.Json/13.0.3": {
       "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "type": "package",
@@ -51,6 +126,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
+      "Apache.NMS.Stomp >= 1.5.4",
       "Newtonsoft.Json >= 13.0.3"
     ]
   },
@@ -98,6 +174,10 @@
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
         "dependencies": {
+          "Apache.NMS.Stomp": {
+            "target": "Package",
+            "version": "[1.5.4, )"
+          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
@@ -125,5 +205,27 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.105/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Apache.NMS 1.5.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Apache.NMS",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Apache.NMS.Stomp 1.5.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Apache.NMS.Stomp",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
 }
