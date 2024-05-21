@@ -43,10 +43,12 @@ namespace WpfClient
                 List<Chat> chats = JsonConvert.DeserializeObject<List<Chat>>(responseBody);
 
                 LstBoxChats.Items.Clear();
-
-                foreach (Chat c in chats)
+                if (chats != null)
                 {
-                    LstBoxChats.Items.Add(c.bezeichnung);
+                    foreach (Chat c in chats)
+                    {
+                        LstBoxChats.Items.Add(c.bezeichnung);
+                    }
                 }
             }
             catch (HttpRequestException ex)
