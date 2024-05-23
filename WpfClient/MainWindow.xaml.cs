@@ -117,15 +117,50 @@ namespace WpfClient
                         List<Message> msgs = activeChat.messages;
                         foreach (Message m in msgs)
                         {
-                            LstBoxMsgs.Items.Add(m.message);
+                            if (m.receiver == false)
+                            {
+                                LstBoxMsgs.Items.Add(m.message);
+                            }
                         }
                     }
-                    
 
                 }
                 catch (HttpRequestException ex)
                 {
                     MessageBox.Show($"Fehler beim Senden der Messages: {ex.Message}");
+                }
+            }
+            txtNewMsg.Clear();
+        }
+
+        private async void btnAddChat_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtReceiver.Text != null && txtChat != null) 
+            {
+                string receiver = txtReceiver.Text;
+                string chatName = txtChat.Text;
+                HttpClient httpClient = new HttpClient();
+                string url = $"http://localhost:8080/app/addChat?userId={currentUser.id}&chatName={chatName}&receiver={receiver}";
+
+                try
+                {
+                    HttpResponseMessage response = await httpClient.PutAsync(url, null);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        txtChat.Clear();
+                        txtReceiver.Clear();
+                        url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{chatName}";
+                        response = await httpClient.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
+                        LstBoxChats.Items.Add(activeChat.bezeichnung);
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
                 }
             }
         }

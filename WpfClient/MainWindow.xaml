@@ -22,5 +22,10 @@
         <ListBox x:Name="LstBoxMsgs" Margin="296,0,-5,0" Grid.Column="2"/>
         <TextBox x:Name="txtNewMsg" Grid.Column="2" HorizontalAlignment="Left" Margin="296,727,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="643" Height="57" Visibility="Hidden"/>
         <Button x:Name="btnSend" Grid.Column="2" Content="Send" HorizontalAlignment="Left" Height="48" Margin="944,726,0,0" VerticalAlignment="Top" Width="168" Click="btnSend_Click" Visibility="Hidden"/>
+        <Button x:Name="btnAddChat" Content="AddChat" HorizontalAlignment="Left" Height="30" Margin="0,750,0,0" VerticalAlignment="Top" Width="484" Grid.ColumnSpan="3" Click="btnAddChat_Click"/>
+        <TextBox x:Name="txtChat" HorizontalAlignment="Left" Height="50" Margin="54,695,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237" Grid.Column="2"/>
+        <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Height="50" Margin="52,640,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Grid.Column="2"/>
+        <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="0,640,0,0" VerticalAlignment="Top" Width="205" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label Content="ChatName:" HorizontalAlignment="Left" Margin="0,695,0,0" VerticalAlignment="Top" Height="50" Width="205" Grid.Column="1" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
