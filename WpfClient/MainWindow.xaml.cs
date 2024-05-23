@@ -1,5 +1,4 @@
-﻿using Apache.NMS;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +12,7 @@ namespace WpfClient
     {
         private User currentUser;
         private Chat activeChat;
+        private WebSocketClient webSocketClient;
 
         public MainWindow(object user)
         {
@@ -23,8 +23,16 @@ namespace WpfClient
             icon.EndInit();
             Icon = BitmapFrame.Create(icon);*/
             InitializeComponent();
+            webSocketClient = new WebSocketClient();
+            connectWebSocket();
+            webSocketClient.OnMessageReceived += WebSocketClient_OnMessageReceived;
             currentUser = (User)user;
             loadChats();
+        }
+
+        public async void connectWebSocket()
+        {
+            await webSocketClient.ConnectAsync(new Uri("http://localhost:8080/ws"));
         }
 
         public async void loadChats()
@@ -163,6 +171,14 @@ namespace WpfClient
                     MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
                 }
             }
+        }
+
+        private void WebSocketClient_OnMessageReceived(string message)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                loadChats();
+            });
         }
     }
 }
