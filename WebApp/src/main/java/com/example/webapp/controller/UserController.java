@@ -81,7 +81,6 @@ public class UserController {
     //alle Chats eines Users aus der DB holen
     @GetMapping("/users/{userId}/chats")
     public List<ChatEntity> getChatsByUser(@PathVariable String userId) {
-        System.out.println(userService.getChatsByUser(userId));
         //System.out.println(userService.getChatsByUser(userId));
         return userService.getChatsByUser(userId);
     }

@@ -49,7 +49,7 @@ function showChats(chats){
     chatListElement.appendChild(headerElement);
 
     chats.forEach(chat => {
-        console.log(chat.bezeichnung + " - " + active_chat)
+        //console.log(chat.bezeichnung + " - " + active_chat)
         if (active_chat != null && active_chat.bezeichnung == chat.bezeichnung){
             active_chat = chat;
             showMessages(active_chat.messages);

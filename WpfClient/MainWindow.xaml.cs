@@ -1,6 +1,7 @@
-﻿using Apache.NMS.Stomp.Commands;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http;
+using System.Net.WebSockets;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,8 +14,6 @@ namespace WpfClient
     {
         private User currentUser;
         private Chat activeChat;
-        private WebSocketClient webSocketClient;
-
         public MainWindow(object user)
         {
             //Icon setzen
@@ -24,17 +23,8 @@ namespace WpfClient
             icon.EndInit();
             Icon = BitmapFrame.Create(icon);*/
             InitializeComponent();
-            webSocketClient = new WebSocketClient();
-            connectWebSocket();
-            webSocketClient.OnMessageReceived += WebSocketClient_OnMessageReceived;
             currentUser = (User)user;
             loadChats();
-        }
-
-        public async void connectWebSocket()
-        {
-            webSocketClient.Connect("ws://localhost:8080/ws");
-            webSocketClient.Subscribe("/topic/loadchat");
         }
 
         public async void loadChats()
@@ -119,7 +109,6 @@ namespace WpfClient
                     HttpResponseMessage response = await httpClient.PutAsync(url, null);
                     if (response.IsSuccessStatusCode) 
                     {
-                        webSocketClient.SendMessage("/loadChat", txtNewMsg.Text);
                         url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
                         response = await httpClient.GetAsync(url);
                         response.EnsureSuccessStatusCode();
@@ -177,14 +166,6 @@ namespace WpfClient
                     MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
                 }
             }
-        }
-
-        private void WebSocketClient_OnMessageReceived(string message)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                loadChats();
-            });
         }
     }
 }
