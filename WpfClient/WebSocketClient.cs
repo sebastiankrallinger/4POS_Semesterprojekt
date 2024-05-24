@@ -5,42 +5,61 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
-using System.Net.WebSockets;
+using WebSocket4Net;
 
 namespace WpfClient
 {
     internal class WebSocketClient
     {
-        private ClientWebSocket _client;
+        private WebSocket ws;
 
         public event Action<string> OnMessageReceived;
 
-        public WebSocketClient()
+        public void Connect(string uri)
         {
-            _client = new ClientWebSocket();
+            ws = new WebSocket(uri);
+            ws.Opened += OnOpened;
+            ws.Closed += OnClosed;
+            ws.MessageReceived += OnMessageReceivedHandler;
+            ws.Open();
         }
 
-        public async Task ConnectAsync(Uri uri)
+        private void OnOpened(object sender, EventArgs e)
         {
-            await _client.ConnectAsync(uri, CancellationToken.None);
-            await ReceiveMessages();
+            MessageBox.Show("Connected to WebSocket server");
+            Send("CONNECT\naccept-version:1.1,1.2\n\n\0");
         }
 
-        private async Task ReceiveMessages()
+        private void OnClosed(object sender, EventArgs e)
         {
-            var buffer = new byte[1024 * 4];
-            while (_client.State == WebSocketState.Open)
-            {
-                var result = await _client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                OnMessageReceived?.Invoke(message);
-            }
+            MessageBox.Show("Disconnected from WebSocket server");
         }
 
-        public async Task SendMessageAsync(string message)
+        private void OnMessageReceivedHandler(object sender, MessageReceivedEventArgs e)
         {
-            var buffer = Encoding.UTF8.GetBytes(message);
-            await _client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+            OnMessageReceived?.Invoke(e.Message);
+        }
+
+        public void Subscribe(string destination)
+        {
+            Send($"SUBSCRIBE\ndestination:{destination}\nid:sub-0\n\n\0");
+        }
+
+        public void SendMessage(string destination, string message)
+        {
+            var msg = $"SEND\ndestination:{destination}\n\n{message}\0";
+            Send(msg);
+        }
+
+        private void Send(string message)
+        {
+            ws.Send(message);
+        }
+
+        public void Disconnect()
+        {
+            Send("DISCONNECT\n\n\0");
+            ws.Close();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Apache.NMS.Stomp.Commands;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,7 +33,8 @@ namespace WpfClient
 
         public async void connectWebSocket()
         {
-            await webSocketClient.ConnectAsync(new Uri("http://localhost:8080/ws"));
+            webSocketClient.Connect("ws://localhost:8080/ws");
+            webSocketClient.Subscribe("/topic/loadchat");
         }
 
         public async void loadChats()
@@ -89,9 +91,12 @@ namespace WpfClient
                         activeChat = c;
                         LstBoxMsgs.Items.Clear();
                         List<Message> msgs = activeChat.messages;
-                        foreach (Message m in msgs)
+                        if (msgs != null)
                         {
-                            LstBoxMsgs.Items.Add(m.message);
+                            foreach (Message m in msgs)
+                            {
+                                LstBoxMsgs.Items.Add(m.message);
+                            }
                         }
                     }
                 }
@@ -114,6 +119,7 @@ namespace WpfClient
                     HttpResponseMessage response = await httpClient.PutAsync(url, null);
                     if (response.IsSuccessStatusCode) 
                     {
+                        webSocketClient.SendMessage("/loadChat", txtNewMsg.Text);
                         url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
                         response = await httpClient.GetAsync(url);
                         response.EnsureSuccessStatusCode();

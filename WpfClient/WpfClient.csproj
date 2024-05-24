@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Apache.NMS.Stomp" Version="1.5.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
   </ItemGroup>
 
 </Project>
