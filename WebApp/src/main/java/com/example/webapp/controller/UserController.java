@@ -1,5 +1,6 @@
 package com.example.webapp.controller;
 
+import com.example.webapp.WebSocketHandler;
 import com.example.webapp.dtos.UserDto;
 import com.example.webapp.models.ChatEntity;
 import com.example.webapp.models.MessageEntity;
@@ -10,14 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @Controller
@@ -26,13 +31,13 @@ import java.util.List;
 public class UserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final UserService userService;
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private final WebSocketHandler webSocketHandler;
 
-    //Konstruktor
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService, WebSocketHandler webSocketHandler) {
 
         this.userService = userService;
+        this.webSocketHandler = webSocketHandler;
     }
 
     //Passwort ueberpruefen und User erstellen/zurueckgeben
@@ -102,12 +107,20 @@ public class UserController {
     //Chat hinzufuegen und Client ueber WS benachrichtigen
     @PutMapping("addChat")
     @ResponseBody
-    @MessageMapping("/chat")
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
         userService.updateChats(getUser(userId), chatName, receiver);
-        messagingTemplate.convertAndSend("/topic/loadChat", chatName);
-    }
+        List<WebSocketSession> sessions = webSocketHandler.getSessions();
+        for (WebSocketSession s:sessions) {
+            if (s.isOpen()){
+                try {
+                    s.sendMessage(new TextMessage(chatName));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
+    }
 
     //Nachricht hinzufuegen und zum Empfaenger senden
     @PutMapping("addMsg")
@@ -119,9 +132,17 @@ public class UserController {
 
     //Nachricht beim Empfaenger hinzufuegen und Client ueber WS benachrichtigen
     @ResponseBody
-    @MessageMapping("/loadChat")
     public void sendMsg(String id, String msg, String chatname) {
-        messagingTemplate.convertAndSend("/topic/loadChat", msg);
+        List<WebSocketSession> sessions = webSocketHandler.getSessions();
+        for (WebSocketSession s:sessions) {
+            if (s.isOpen()){
+                try {
+                    s.sendMessage(new TextMessage(msg));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         UserDto user = getUser(id);
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {

@@ -1,16 +1,18 @@
 let active_chat = null;
 
-let sock = new SockJS('http://localhost:8080/ws');
+let socket = new WebSocket("ws://localhost:8080/ws");
 
-let client = Stomp.over(sock);
+socket.onopen = function(event) {
+    console.log("Connected to WebSocket server.");
+};
 
-client.connect({}, (frame) => {
-    console.log("Frame is: " +frame);
-    client.subscribe('/topic/loadChat', (msg) => {
-        console.log(msg);
-        getChats();
-    });
-});
+socket.onmessage = function(event) {
+    getChats();
+};
+
+socket.onclose = function(event) {
+    console.log("Disconnected from WebSocket server.");
+};
 
 document.addEventListener("DOMContentLoaded", function() {
     getChats();
