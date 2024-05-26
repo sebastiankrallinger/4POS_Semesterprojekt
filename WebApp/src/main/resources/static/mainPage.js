@@ -14,6 +14,10 @@ socket.onclose = function(event) {
     console.log("Disconnected from WebSocket server.");
 };
 
+function sendMessage(message) {
+    socket.send(message);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     getChats();
 });
@@ -114,10 +118,12 @@ function getParameterByName(name, url) {
 }
 
 function addChat(){
+    let receiver
+    let chatName
     getUserId()
         .then(userId => {
-            const receiver = prompt('Reveiver: ')
-            const chatName = prompt('Chat-Name:');
+            receiver = prompt('Reveiver: ')
+            chatName = prompt('Chat-Name:');
             if (chatName) {
                 return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
                     method: 'PUT'
@@ -126,6 +132,7 @@ function addChat(){
         })
         .then(response => {
             if (response.ok) {
+                sendMessage("newChat");
                 getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen des Chats.');
@@ -137,9 +144,10 @@ function addChat(){
 }
 
 function addMsg(){
+    let msg
     getUserId()
         .then(userId => {
-            const msg = prompt('Message:');
+            msg = prompt('Message:');
             if (msg) {
                 return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}&receiver=${active_chat.receiver}`, {
                     method: 'PUT'
@@ -148,6 +156,7 @@ function addMsg(){
         })
         .then(response => {
             if (response.ok) {
+                sendMessage("newMsg");
                 getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen der Msg.');

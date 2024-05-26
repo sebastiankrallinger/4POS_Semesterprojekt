@@ -20,6 +20,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -109,17 +111,6 @@ public class UserController {
     @ResponseBody
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
         userService.updateChats(getUser(userId), chatName, receiver);
-        List<WebSocketSession> sessions = webSocketHandler.getSessions();
-        for (WebSocketSession s:sessions) {
-            if (s.isOpen()){
-                try {
-                    s.sendMessage(new TextMessage(chatName));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
     }
 
     //Nachricht hinzufuegen und zum Empfaenger senden
@@ -130,19 +121,9 @@ public class UserController {
         userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
 
-    //Nachricht beim Empfaenger hinzufuegen und Client ueber WS benachrichtigen
+    //Nachricht beim Empfaenger hinzufuegen
     @ResponseBody
     public void sendMsg(String id, String msg, String chatname) {
-        List<WebSocketSession> sessions = webSocketHandler.getSessions();
-        for (WebSocketSession s:sessions) {
-            if (s.isOpen()){
-                try {
-                    s.sendMessage(new TextMessage(msg));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         UserDto user = getUser(id);
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {
