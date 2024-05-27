@@ -15,6 +15,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 //DB Konfiguration
 @Configuration
 public class MongoDBConfiguration {
+    //Link zur DB
     @Value("${spring.data.mongodb.uri}")
     private String connectionString;
 

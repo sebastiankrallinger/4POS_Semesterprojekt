@@ -8,9 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
             username: username,
             password: password
         };
+
         let xhr = new XMLHttpRequest();
+
         xhr.open('POST', '/app/user', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
+
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 201) {
                 console.log('User saved');
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById("username-info").innerText = "Falsches Passwort - erneut versuchen";
             }
         };
+
         xhr.send(JSON.stringify(data));
     });
 });

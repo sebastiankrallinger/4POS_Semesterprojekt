@@ -51,6 +51,7 @@ function showChats(chats){
     chatListElement.innerHTML = '';
 
     const headerElement = document.createElement('h2');
+
     headerElement.textContent = 'Deine Chats';
     chatListElement.appendChild(headerElement);
 
@@ -60,9 +61,12 @@ function showChats(chats){
             active_chat = chat;
             showMessages(active_chat.messages);
         }
+
         const chatButton = document.createElement('button');
+
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
         chatButton.classList.add('chat-button');
+
         chatButton.addEventListener('click', () => {
             active_chat = chat;
             showMessages(active_chat.messages);
@@ -72,9 +76,10 @@ function showChats(chats){
 }
 
 function showMessages(messages) {
-    console.log(active_chat)
+    //console.log(active_chat)
     const messageListElement = document.getElementById('messageList');
     messageListElement.innerHTML = '';
+
     //console.log(messages)
     if (messages != null) {
         messages.forEach(message => {
@@ -120,6 +125,7 @@ function getParameterByName(name, url) {
 function addChat(){
     let receiver
     let chatName
+
     getUserId()
         .then(userId => {
             receiver = prompt('Reveiver: ')
@@ -145,6 +151,7 @@ function addChat(){
 
 function addMsg(){
     let msg
+
     getUserId()
         .then(userId => {
             msg = prompt('Message:');
