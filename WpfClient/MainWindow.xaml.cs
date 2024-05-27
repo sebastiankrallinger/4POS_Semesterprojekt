@@ -1,56 +1,53 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.WebSockets;
-using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace WpfClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private User currentUser;
         private Chat activeChat;
         private ClientWebSocket webSocket;
+
         public MainWindow(object user)
         {
-            //Icon setzen
-            /*BitmapImage icon = new();
-            icon.BeginInit();
-            icon.UriSource = new Uri("", UriKind.RelativeOrAbsolute);
-            icon.EndInit();
-            Icon = BitmapFrame.Create(icon);*/
             InitializeComponent();
             currentUser = (User)user;
             loadChats();
             connectWebSocket();
         }
 
+        //Verbindung zum Websocket herstellen
         private async void connectWebSocket()
         {
             webSocket = new ClientWebSocket();
+
             try
             {
+                //Websocket verbinden
                 await webSocket.ConnectAsync(new Uri("ws://localhost:8080/ws"), CancellationToken.None);
                 //MessageBox.Show("Connected to the server.\n");
                 await ReceiveMessages();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Connection error: {ex.Message}\n");
+                MessageBox.Show($"Verbindung zum Websocket fehlgeschlagen: {ex.Message}\n");
             }
         }
 
+        //Nachrichten vom Websocket empfangen
         private async Task ReceiveMessages()
         {
             var buffer = new byte[1024 * 4];
+
             while (webSocket.State == WebSocketState.Open)
             {
                 var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
@@ -60,13 +57,17 @@ namespace WpfClient
                 {
                     var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
                     //MessageBox.Show($"Received: {message}\n");
+
+                    //WS-Nachricht verarbeiten
                     if(message == "newChat")
                     {
                         loadChats();
                     }else if (message == "newMsg")
                     {
+                        //Messages neu laden
                         HttpClient httpClient = new HttpClient();
                         string url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
+
                         HttpResponseMessage response = await httpClient.GetAsync(url);
                         response.EnsureSuccessStatusCode();
 
@@ -77,13 +78,20 @@ namespace WpfClient
                         List<Message> msgs = activeChat.messages;
                         foreach (Message m in msgs)
                         {
-                            LstBoxMsgs.Items.Add(m.message);
+                            if(m.receiver == false)
+                            {
+                                LstBoxMsgs.Items.Add(m.message);
+                            }else if (m.receiver == true)
+                            {
+                                LstBoxMsgs.Items.Add("\t\t\t\t" + m.message);
+                            }
                         }
                     }
                 }
             }
         }
 
+        //Chats aus der DB laden und anzeigen
         public async void loadChats()
         {
             HttpClient httpClient = new HttpClient();
@@ -91,6 +99,7 @@ namespace WpfClient
 
             try
             {
+                //Daten aus DB laden
                 HttpResponseMessage response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
@@ -99,6 +108,7 @@ namespace WpfClient
 
                 List<Chat> chats = JsonConvert.DeserializeObject<List<Chat>>(responseBody);
 
+                //GUI aktualisieren
                 LstBoxChats.Items.Clear();
                 if (chats != null)
                 {
@@ -116,10 +126,12 @@ namespace WpfClient
 
         }
 
+        //Nachrichten des ausgewählten Chats anzeigen
         private async void LstBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             txtNewMsg.Visibility = Visibility.Visible;
             btnSend.Visibility = Visibility.Visible;
+
             HttpClient httpClient = new HttpClient();
             string url = $"http://localhost:8080/app/users/{currentUser.id}/chats";
 
@@ -131,6 +143,8 @@ namespace WpfClient
                 string responseBody = await response.Content.ReadAsStringAsync();
 
                 List<Chat> chats = JsonConvert.DeserializeObject<List<Chat>>(responseBody);
+
+                //GUI aktualisieren
                 foreach (Chat c in chats)
                 {
                     if (e.AddedItems[0].ToString() == c.bezeichnung)
@@ -142,7 +156,14 @@ namespace WpfClient
                         {
                             foreach (Message m in msgs)
                             {
-                                LstBoxMsgs.Items.Add(m.message);
+                                if (m.receiver == false)
+                                {
+                                    LstBoxMsgs.Items.Add(m.message);
+                                }
+                                else if (m.receiver == true)
+                                {
+                                    LstBoxMsgs.Items.Add("\t\t\t\t" + m.message);
+                                }
                             }
                         }
                     }
@@ -154,6 +175,8 @@ namespace WpfClient
             }
         }
 
+
+        //Nachricht senden
         private async void btnSend_Click(object sender, RoutedEventArgs e)
         {
             if (txtNewMsg.Text != null)
@@ -162,16 +185,18 @@ namespace WpfClient
                 string url = $"http://localhost:8080/app/addMsg?id={currentUser.id}&chatname={activeChat.bezeichnung}&msg={txtNewMsg.Text}&receiver={activeChat.receiver}";
 
                 try
-                {
+                {                
+                    //Message an Server senden
                     HttpResponseMessage response = await httpClient.PutAsync(url, null);
                     if (response.IsSuccessStatusCode) 
                     {
-                        var message = txtNewMsg.Text;
+                        var message = "newMsg";
                         var messageBuffer = Encoding.UTF8.GetBytes(message);
                         var segment = new ArraySegment<byte>(messageBuffer);
 
                         try
                         {
+                            //Nachricht an Websocket senden
                             await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
                             //MessageBox.Show($"Sent: {message}\n");
                         }
@@ -179,13 +204,17 @@ namespace WpfClient
                         {
                             MessageBox.Show($"Send error: {ex.Message}\n");
                         }
+
                         url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
+
+                        //aktualisierte Messages laden
                         response = await httpClient.GetAsync(url);
                         response.EnsureSuccessStatusCode();
 
                         string responseBody = await response.Content.ReadAsStringAsync();
                         activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
 
+                        //GUI aktualisieren
                         LstBoxMsgs.Items.Clear();
                         List<Message> msgs = activeChat.messages;
                         foreach (Message m in msgs)
@@ -203,26 +232,31 @@ namespace WpfClient
             txtNewMsg.Clear();
         }
 
+        //neuen Chat hinzufuegen
         private async void btnAddChat_Click(object sender, RoutedEventArgs e)
         {
             if (txtReceiver.Text != null && txtChat != null) 
             {
                 string receiver = txtReceiver.Text;
                 string chatName = txtChat.Text;
+
                 HttpClient httpClient = new HttpClient();
                 string url = $"http://localhost:8080/app/addChat?userId={currentUser.id}&chatName={chatName}&receiver={receiver}";
 
                 try
                 {
+                    //Daten an Server senden
                     HttpResponseMessage response = await httpClient.PutAsync(url, null);
+
                     if (response.IsSuccessStatusCode)
                     {
-                        var message = chatName;
+                        var message = "newChat";
                         var messageBuffer = Encoding.UTF8.GetBytes(message);
                         var segment = new ArraySegment<byte>(messageBuffer);
 
                         try
                         {
+                            //Nachricht an Websocket senden
                             await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
                             //MessageBox.Show($"Sent: {message}\n");
                         }
@@ -230,14 +264,19 @@ namespace WpfClient
                         {
                             MessageBox.Show($"Send error: {ex.Message}\n");
                         }
+
                         txtChat.Clear();
                         txtReceiver.Clear();
+
+                        //aktualisierte Chats aus DB laden
                         url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{chatName}";
                         response = await httpClient.GetAsync(url);
                         response.EnsureSuccessStatusCode();
 
                         string responseBody = await response.Content.ReadAsStringAsync();
                         activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
+
+                        //GUI aktualisieren
                         LstBoxChats.Items.Add(activeChat.bezeichnung);
                     }
                 }
