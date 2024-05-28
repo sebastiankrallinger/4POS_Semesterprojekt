@@ -88,11 +88,165 @@ Bei beiden wird die GUI aktualisiert und die neue Nachricht wird im Nachrichtenf
 <br>
 
 ## API-Beschreibung
-Die API wird durch einen Spring Boot Server basierend auf dem REST-Prinzip implementiert. Spring Boot ermöglicht es Clients mit dem Server, über GET und POST, zu kommunizieren und Daten auszutauschen. 
+Die API wird durch einen Spring Boot Server basierend auf dem REST-Prinzip implementiert. Spring Boot ermöglicht es Clients mit dem Server, über GET und POST, zu kommunizieren und Daten auszutauschen. Weiters bietet der Server einen Websocket, bei dem sich alle Benutzer nach der Anmeldung registrieren, damit sie bei neuen Nachrichten benachrichtigt werden können und die GUI aktualisiert werden kann.<br>
+
+### Endpunkte:<br>
+
+<br>
+
+<!-- Hauptendpunkt -->
+<details>
+  <summary>/app </summary>
+  
+  **Beschreibung:** Dieser Endpunkt ist der Hauptendpunkt der API, er muss vor jedem anderen Endpoint geschrieben werden.
+</details>
+
+<!-- MainController -->
+<details>
+  <summary>/Login [GET]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt gibt die Html Seite **"loginPage.htmnl"** zurück.
+</details>
+<details>
+  <summary>/mainPage [GET]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt gibt die Html Seite **"mainPage.htmnl"** zurück.
+</details>
+
+<!-- UserController -->
+<!-- Login -->
+<details>
+  <summary>/user [POST]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt prüft die eingegebenen Benutzerdaten und authorisiert den Login. 
+                    Es wird ein neuer Benutzer erstellt oder der vorhandene Benutzer verwendet.
+  
+  **JSON-Body:**
+  ```json
+  {
+    "username": "Benutzername",
+    "password": "Passwort"
+  }
+  ```
+
+  **Return-Wert:**
+  ```json
+  {
+    "id": "ID",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "chats": [
+      {
+        "bezeichnung": "Chatname",
+        "receiver": "EmpfaengerID",
+        "messageEntities": [
+          {
+            "message": "Nachricht",
+            "receiver": "True || False",
+            "date": "Zeitstempel"
+          },
+          { ... }
+        ]
+      },
+      { ... }
+    ]
+  }
+  ```
+</details>
+
+<!-- Chats -->
+<details>
+  <summary>/users/{userId}/chats [GET]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt gibt eine Liste aller Chats eines Benutzers zurück.
+  
+  **JSON-Body:**
+  ```json
+  {
+    "userId": "UserID"
+  }
+  ```
+
+  **Return-Wert:**
+  ```json
+  [
+    {
+      "bezeichnung": "Chatname",
+      "receiver": "EmpfaengerID",
+      "messageEntities": [ ... ]
+    },
+    { ... }
+  ]
+  ```
+</details>
+<details>
+  <summary>/users/{userId}/chat/{chatId} [GET]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt gibt einen Chat des Benutzers zurück.
+  
+  **JSON-Body:**
+  ```json
+  {
+    "userId": "UserID",
+    "chatId": "ChatID"
+  }
+  ```
+
+  **Return-Wert:**
+  ```json
+  {
+    "bezeichnung": "Chatname",
+    "receiver": "EmpfaengerID",
+    "messageEntities": 
+    [
+      {
+        "message": "Nachricht",
+        "receiver": "True || False",
+        "date": "Zeitstempel"
+      },
+      { ... }
+    ]
+  }
+  ```
+</details>
+
+<!-- Add Chat -->
+<details>
+  <summary>/addChat [POST]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt erstellt einen neuen Chat.
+  
+  **JSON-Body:**
+  ```json
+  {
+    "userId": "UserID",
+    "chatName": "Chatname",
+    "receiver": "EmpfaengerID"
+  }
+  ```
+</details>
+
+<!-- Add Message -->
+<details>
+  <summary>/addChat [POST]</summary>
+  
+  **Beschreibung:** Dieser Endpunkt erstellt einen neuen Chat.
+  
+  **JSON-Body:**
+  ```json
+  {
+    "id": "UserID",
+    "chatname": "Chatname",
+    "msg": "Nachricht",
+    "receiver": "EmpfaengerID"
+  }
+  ```
+</details>
 
 <br>
 
 ## Verwendung der API
+
 
 
 <br>

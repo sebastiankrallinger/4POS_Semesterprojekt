@@ -187,7 +187,7 @@ namespace WpfClient
                 try
                 {                
                     //Message an Server senden
-                    HttpResponseMessage response = await httpClient.PutAsync(url, null);
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
                     if (response.IsSuccessStatusCode) 
                     {
                         var message = "newMsg";
@@ -246,7 +246,7 @@ namespace WpfClient
                 try
                 {
                     //Daten an Server senden
-                    HttpResponseMessage response = await httpClient.PutAsync(url, null);
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
                     if (response.IsSuccessStatusCode)
                     {

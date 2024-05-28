@@ -132,7 +132,7 @@ function addChat(){
             chatName = prompt('Chat-Name:');
             if (chatName) {
                 return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
-                    method: 'PUT'
+                    method: 'POST'
                 });
             }
         })
@@ -157,7 +157,7 @@ function addMsg(){
             msg = prompt('Message:');
             if (msg) {
                 return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}&receiver=${active_chat.receiver}`, {
-                    method: 'PUT'
+                    method: 'POST'
                 });
             }
         })

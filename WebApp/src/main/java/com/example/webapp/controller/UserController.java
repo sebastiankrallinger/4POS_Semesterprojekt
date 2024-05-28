@@ -64,13 +64,11 @@ public class UserController {
     }
 
     //alle User aus der DB holen
-    @GetMapping("users")
     public List<UserDto> getUsers() {
         return userService.findAll();
     }
 
     //einen User aus der DB holen
-    @GetMapping("user/{id}")
     public UserDto getUser(@PathVariable String id) {
         UserDto userDTO = userService.findOne(id);
         if (userDTO == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User nicht gefunden");;
@@ -91,22 +89,15 @@ public class UserController {
         return userService.getChatByUser(userId, chatId);
     }
 
-    //alle Nachrichten eines Chats aus der DB holen
-    @GetMapping("/users/{userId}/messages/{chatId}")
-    public MessageEntity getMsgsByChat(@PathVariable String userId, @PathVariable String chatId) {
-        System.out.println(userService.getMsgsByChat(chatId));
-        return userService.getMsgsByChat(chatId);
-    }
-
     //Chat hinzufuegen und Client ueber WS benachrichtigen
-    @PutMapping("addChat")
+    @PostMapping("addChat")
     @ResponseBody
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
         userService.updateChats(getUser(userId), chatName, receiver);
     }
 
     //Nachricht hinzufuegen und zum Empfaenger senden
-    @PutMapping("addMsg")
+    @PostMapping("addMsg")
     @ResponseBody
     public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg, @RequestParam String receiver) {
         sendMsg(receiver, msg, chatname);
