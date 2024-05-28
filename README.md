@@ -92,8 +92,6 @@ Die API wird durch einen Spring Boot Server basierend auf dem REST-Prinzip imple
 
 ### Endpunkte:<br>
 
-<br>
-
 <!-- Hauptendpunkt -->
 <details>
   <summary>/app </summary>
@@ -249,15 +247,91 @@ Die API wird durch einen Spring Boot Server basierend auf dem REST-Prinzip imple
 
 
 
+
 <br>
 
 ## Diskussion der Ergebnisse
-
+Durch das Semesterprojekt wurden viele bereits gelernte Fähigkeiten im Bereich der Softwareentwicklung, der Datenbankanbindung und der Webentwicklung vertieft und in einem praktischen Beispiel angewendet. Die Chatapp verknüpft alle Bereiche und zeigt wie man ein Gesamtsystem entwickelt und eine dementsprechende Dokumentation mittels MarkDown erstellt. Die App bietet eine einfache Benutzeroberfläche und die Möglichkeit Nachrichten zwischen verschiedenen Benutzern auszutauschen. Der Websocket ermöglicht eine Echtzeitaktualisierung der Chats und Nachrichten für jeden Benutzer und durch die Speicherung in einer MongoDB-Datenbank können alle Nachrichten jederzeit abgerufen werden.
 
 <br>
+
+### Zusammenfassung
+TinyWhatsApp ermöglicht es Benutzern in Echtzeit über die REST-API und dem Websocket mit einer einfachen Bentzueroberfläche platformunabhängig zu interagieren und Nachrichten auszutauschen. MongoDB sorgt für die Speicherung aller Benutzerdaten, Chats und Nachrichten.
+
+<br>
+
+### Hintergründe
+Bei der Chatapp stand im Vordergrund verschiedenste gelernte Tecknicken zu implementieren und miteinander zu verknüpfen, es soll im Unterricht Gelerntes angewendet werden. Die verwendeten Technologien (Spring-Boot, WPF, HTML, JavaScript, CSS, JSON und MongoDB) sichern eine zukünftige Unterstützung und sorgen für eine sichere Verwaltung und Speicherung der Daten.
+
+<br>
+
 
 ## Diagramme
 
+### Klassendiagramm WPF-Client
+```mermaid
+classDiagram
+  Home o-- Login
+  Home o-- Register
+  Home o-- PaswordForgotten
+  Home o-- Delete
+  Home o-- Chat
+  Home o-- Message
+```
+
+<br>
+
+### Klassendiagramm Web-Client
+```mermaid
+classDiagram
+  Home o-- Login-Register-PasswortForgotten-Delete
+  Home o-- Chat
+  Home o-- Message
+```
+
+<br>
+
+### Klassendiagramm Spring-Boot Server
+```mermaid
+classDiagram
+    Application o-- ChatController
+    ChatController o-- ChatService
+    ChatService o-- User
+    ChatService o-- Chat
+    ChatService o-- Message
+    ChatService o-- UserRepository
+    ChatService o-- ChatRepository
+    ChatService o-- MessageRepository
+    MongoDBRepository <-- ChatRepository
+    MongoDBRepository <-- MessageRepository
+    MongoDBRepository <-- UserRepository
+```
+
+<br>
 <br>
 
 ## Quellenverzeichnis
+
+### Spring-Boot 
+#### [Spring-Boot]()
+#### [JSON](https://www.json.org/json-en.html)
+
+### WPF
+#### [C#](https://learn.microsoft.com/de-de/dotnet/csharp/)
+#### [JSON](https://www.json.org/json-en.html)
+
+### Web-Client
+#### [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+#### [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+#### [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+#### [JSON](https://www.json.org/json-en.html)
+
+### MongoDB
+#### [MongoDB](https://www.mongodb.com/docs/)
+
+### IDE & Nuggets
+#### [WebStrom 2024.1.2](https://www.jetbrains.com/webstorm/download/download-thanks.html?platform=windows)
+#### [IntelliJ IDEA 2024.1.1](https://www.jetbrains.com/idea/download/download-thanks.html?platform=windows)
+   - ###### [Spring Boot Starter Data MongoDB 3.2.5](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb/1.1.0.RELEASE)
+   - ###### [Spring Boot Starter Web 3.2.5](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
+#### [Visual Studio 2022 17.9.7](https://visualstudio.microsoft.com/de/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
