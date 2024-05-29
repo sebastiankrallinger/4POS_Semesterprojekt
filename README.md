@@ -9,6 +9,7 @@ Die Chatapp, Tiny Whatsapp, besteht aus einer Client-Client-Server-Architektur. 
 graph TD;
   A[WPF Client] <--> C[Spring Boot Server];
   B[Web Client] <--> C[Spring Boot Server];
+  C[Spring Boot Server] <--> E[Websocket];
   C[Spring Boot Server] <--> D[MongoDB];
 ```
 <br>
@@ -244,7 +245,7 @@ Die API wird durch einen Spring Boot Server basierend auf dem REST-Prinzip imple
 <br>
 
 ## Verwendung der API
-
+Abbildung der Topologie, der MongoDB-Konfiguration, des Websocket und einzelner Codeausschnitte.
 
 
 
@@ -271,22 +272,10 @@ Bei der Chatapp stand im Vordergrund verschiedenste gelernte Tecknicken zu imple
 ### Klassendiagramm WPF-Client
 ```mermaid
 classDiagram
-  Home o-- Login
-  Home o-- Register
-  Home o-- PaswordForgotten
-  Home o-- Delete
-  Home o-- Chat
-  Home o-- Message
-```
-
-<br>
-
-### Klassendiagramm Web-Client
-```mermaid
-classDiagram
-  Home o-- Login-Register-PasswortForgotten-Delete
-  Home o-- Chat
-  Home o-- Message
+  LoginWindow o-- LoginWindow
+  MainWindow o-- MainWindow
+  MainWindow o-- Message
+  MainWindow o-- User
 ```
 
 <br>
@@ -294,17 +283,19 @@ classDiagram
 ### Klassendiagramm Spring-Boot Server
 ```mermaid
 classDiagram
-    Application o-- ChatController
-    ChatController o-- ChatService
-    ChatService o-- User
-    ChatService o-- Chat
-    ChatService o-- Message
-    ChatService o-- UserRepository
-    ChatService o-- ChatRepository
-    ChatService o-- MessageRepository
-    MongoDBRepository <-- ChatRepository
-    MongoDBRepository <-- MessageRepository
-    MongoDBRepository <-- UserRepository
+    WebAppApplication o-- MainController
+    WebAppApplication o-- UserController
+    UserController o-- IUserService
+    UserService o-- WebSocketConfig
+    UserService o-- WebSocketHandler
+    IUserService o-- UserService
+    UserService o-- UserEntity
+    UserService o-- ChatEntity
+    UserService o-- MessageEntity
+    UserService o-- IUserRepository
+    UserService o-- UserDto
+    IUserRepository o-- UserRepository
+    MongoDBConfiguration <-- UserRepository
 ```
 
 <br>
@@ -334,4 +325,4 @@ classDiagram
 #### [IntelliJ IDEA 2024.1.1](https://www.jetbrains.com/idea/download/download-thanks.html?platform=windows)
    - ###### [Spring Boot Starter Data MongoDB 3.2.5](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb/1.1.0.RELEASE)
    - ###### [Spring Boot Starter Web 3.2.5](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
-#### [Visual Studio 2022 17.9.7](https://visualstudio.microsoft.com/de/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
+#### [Visual Studio 2022 17.8.5](https://visualstudio.microsoft.com/de/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)

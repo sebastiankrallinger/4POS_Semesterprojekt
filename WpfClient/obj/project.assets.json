@@ -55,19 +55,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\skral\\.nuget\\packages\\": {}
+    "C:\\Users\\skral\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\skral\\Dokumente\\GitHub\\4POS_Semesterprojekt\\WpfClient\\WpfClient.csproj",
+      "projectUniqueName": "C:\\Users\\skral\\Desktop\\Sebastian\\HTL_GitHubDocuments\\4POS_Semesterprojekt\\WpfClient\\WpfClient.csproj",
       "projectName": "WpfClient",
-      "projectPath": "C:\\Users\\skral\\Dokumente\\GitHub\\4POS_Semesterprojekt\\WpfClient\\WpfClient.csproj",
+      "projectPath": "C:\\Users\\skral\\Desktop\\Sebastian\\HTL_GitHubDocuments\\4POS_Semesterprojekt\\WpfClient\\WpfClient.csproj",
       "packagesPath": "C:\\Users\\skral\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\skral\\Dokumente\\GitHub\\4POS_Semesterprojekt\\WpfClient\\obj\\",
+      "outputPath": "C:\\Users\\skral\\Desktop\\Sebastian\\HTL_GitHubDocuments\\4POS_Semesterprojekt\\WpfClient\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\skral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -87,11 +92,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -122,7 +122,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.106/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
