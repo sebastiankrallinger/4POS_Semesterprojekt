@@ -1,4 +1,5 @@
 let active_chat = null;
+let previous_chat = null;
 
 let socket = new WebSocket("ws://localhost:8080/ws");
 
@@ -65,10 +66,27 @@ function showChats(chats){
         const chatButton = document.createElement('button');
 
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
+        if (chat.newMsg === true){
+            chatButton.style.fontWeight = 'bold';
+            chatButton.style.backgroundColor = '#FFD700';
+        }
         chatButton.classList.add('chat-button');
 
         chatButton.addEventListener('click', () => {
             active_chat = chat;
+            let btn = document.getElementById('btnMsg');
+            let txtBox = document.getElementById('txtMsg');
+            if (btn){
+                btn.style.visibility = 'visible';
+                txtBox.style.visibility = 'visible';
+            }
+            chatButton.style.fontWeight = 'normal';
+            chatButton.style.backgroundColor = 'lightgrey';
+            if (previous_chat != null && chatButton != previous_chat){
+                previous_chat.style.backgroundColor = '';
+            }
+            previous_chat = chatButton;
+            updateStatus(active_chat);
             showMessages(active_chat.messages);
         });
         chatListElement.appendChild(chatButton);
@@ -149,12 +167,23 @@ function addChat(){
         });
 }
 
+function updateStatus(chat){
+    getUserId()
+        .then(userId => {
+            return fetch(`/app/updateStaus?id=${userId}&chatname=${chat.bezeichnung}`, {
+                method: 'POST'
+            });
+        });
+}
+
 function addMsg(){
     let msg
 
     getUserId()
         .then(userId => {
-            msg = prompt('Message:');
+            let inputField = document.getElementById('txtMsg');
+            msg = inputField.value;
+            inputField.value = '';
             if (msg) {
                 return fetch(`/app/addMsg?id=${userId}&chatname=${active_chat.bezeichnung}&msg=${encodeURIComponent(msg)}&receiver=${active_chat.receiver}`, {
                     method: 'POST'

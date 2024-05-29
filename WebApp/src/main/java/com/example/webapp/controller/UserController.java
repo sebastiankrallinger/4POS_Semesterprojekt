@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,7 @@ public class UserController {
     }
 
     //alle User aus der DB holen
+    @GetMapping("users")
     public List<UserDto> getUsers() {
         return userService.findAll();
     }
@@ -111,9 +113,19 @@ public class UserController {
         List<ChatEntity> chats = user.toUserEntity().getChats();
         for (ChatEntity c:chats) {
             if(c.getBezeichnung().equals(chatname)){
+                c.setNewMsg(true);
                 userService.updateMsg(user, chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), true);
             }
         }
+    }
+
+    //Chatstatus aendern
+    @PostMapping("updateStaus")
+    @ResponseBody
+    public void updateStaus(@RequestParam String id, @RequestParam String chatname) {
+        UserDto user = getUser(id);
+        userService.updateStatus(user, chatname);
+
     }
 
     //Exception Handler

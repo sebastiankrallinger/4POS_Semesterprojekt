@@ -6,15 +6,17 @@ import java.util.List;
 public class ChatEntity {
     private String bezeichnung;
     private String receiver;
+    private boolean newMsg;
     private List<MessageEntity> messageEntities;
 
     public ChatEntity() {
     }
 
-    public ChatEntity(String bezeichnung, List<MessageEntity> messageEntities, String receiver){
+    public ChatEntity(String bezeichnung, List<MessageEntity> messageEntities, String receiver, boolean newMsg){
         this.bezeichnung = bezeichnung;
         this.messageEntities = messageEntities;
         this.receiver = receiver;
+        this.newMsg = newMsg;
     }
 
     public String getBezeichnung() {
@@ -41,6 +43,15 @@ public class ChatEntity {
 
     public ChatEntity setReceiver(String receiver) {
         this.receiver = receiver;
+        return this;
+    }
+
+    public boolean getNewMsg() {
+        return newMsg;
+    }
+
+    public ChatEntity setNewMsg(boolean newMsg) {
+        this.newMsg = newMsg;
         return this;
     }
 

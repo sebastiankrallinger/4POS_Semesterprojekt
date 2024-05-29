@@ -65,16 +65,16 @@ public class UserService implements IUserService{
         List<ChatEntity> chat_receiver = entity_receiver.getChats();
 
         if (chats_sender != null){
-            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString()));
+            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString(), false));
         }else {
             chats_sender = new ArrayList<>();
-            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString()));
+            chats_sender.add(new ChatEntity(chatName, null, entity_receiver.getId().toString(), false));
         }
         if (chat_receiver != null){
-            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
+            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString(), false));
         }else {
             chat_receiver = new ArrayList<>();
-            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString()));
+            chat_receiver.add(new ChatEntity(chatName, null, entity_sender.getId().toString(), false));
         }
         entity_sender.setChats(chats_sender);
         entity_receiver.setChats(chat_receiver);
@@ -93,6 +93,17 @@ public class UserService implements IUserService{
                 }
                 msgs.add(new MessageEntity(msg,  receiver, date));
                 c.setMessages(msgs);
+            }
+        }
+        return new UserDto(userRepository.update(entity));
+    }
+
+    public UserDto updateStatus(UserDto userDto, String chat){
+        UserEntity entity = userDto.toUserEntity();
+        List<ChatEntity> chats = entity.getChats();
+        for (ChatEntity c:chats) {
+            if (c.getBezeichnung().equals(chat)){
+                c.setNewMsg(false);
             }
         }
         return new UserDto(userRepository.update(entity));
