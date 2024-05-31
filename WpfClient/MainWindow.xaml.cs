@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WpfClient
 {
@@ -12,6 +13,8 @@ namespace WpfClient
         private User currentUser;
         private Chat activeChat;
         private ClientWebSocket webSocket;
+        private Style receivedStyle;
+        private Style sentStyle;
 
         public MainWindow(object user)
         {
@@ -156,14 +159,8 @@ namespace WpfClient
                         {
                             foreach (Message m in msgs)
                             {
-                                if (m.receiver == false)
-                                {
-                                    LstBoxMsgs.Items.Add(m.message);
-                                }
-                                else if (m.receiver == true)
-                                {
-                                    LstBoxMsgs.Items.Add("\t\t\t\t" + m.message);
-                                }
+                                MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
+                                LstBoxMsgs.Items.Add(messageItem);
                             }
                         }
                     }
@@ -219,7 +216,8 @@ namespace WpfClient
                         List<Message> msgs = activeChat.messages;
                         foreach (Message m in msgs)
                         {
-                            LstBoxMsgs.Items.Add(m.message);
+                            MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
+                            LstBoxMsgs.Items.Add(messageItem);
                         }
                     }
 
