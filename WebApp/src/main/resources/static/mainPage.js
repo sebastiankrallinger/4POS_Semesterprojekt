@@ -161,8 +161,8 @@ function addChat(){
 
     getUserId()
         .then(userId => {
-            receiver = prompt('Reveiver: ')
-            chatName = prompt('Chat-Name:');
+            receiver = prompt('Empfänger (Username) eingeben: ')
+            chatName = prompt('Chat-Name eingeben:');
             if (chatName && receiver) {
                 return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
                     method: 'POST'
@@ -216,4 +216,12 @@ function addMsg(){
         .catch(error => {
             console.error('Fehler beim Hinzufügen der Msg:', error);
         })
+}
+
+function handleEnter(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+
+        addMsg();
+    }
 }
