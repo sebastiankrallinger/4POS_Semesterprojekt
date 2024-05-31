@@ -20,7 +20,7 @@ body {
 }
 
 .container2{
-    width: 66%;
+    width: 67%;
     background-image: url(/images/bg_chats.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -61,6 +61,7 @@ body {
     padding: 10px 20px;
     border-radius: 15px;
     cursor: pointer;
+    visibility: hidden;
 }
 
 .inputMsg{
@@ -69,6 +70,7 @@ body {
     margin-right: 10px;
     border-radius: 15px;
     border: 1px solid #ddd;
+    visibility: hidden;
 }
 
 .addmsg i {
@@ -107,6 +109,11 @@ body {
     position: sticky;
     top: 0;
     z-index: 1;
+}
+
+.time {
+    font-size: 0.75em;
+    margin-top: 5px;
 }
 
 .messages {

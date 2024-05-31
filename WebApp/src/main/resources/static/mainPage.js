@@ -120,13 +120,21 @@ function showMessages(messages) {
             }
             if (message.receiver == false) {
                 let messageElement = document.createElement('div');
+                let timeElement = document.createElement('div');
+                timeElement.textContent = timePart;
+                timeElement.className = "time";
                 messageElement.textContent = message.message;
                 messageElement.className = "msgSent";
+                messageElement.appendChild(timeElement);
                 messageListElement.appendChild(messageElement);
             }else if (message.receiver == true){
                 let messageElement = document.createElement('div');
+                let timeElement = document.createElement('div');
+                timeElement.textContent = timePart;
+                timeElement.className = "time";
                 messageElement.textContent = message.message;
                 messageElement.className = "msgReceived";
+                messageElement.appendChild(timeElement);
                 messageListElement.appendChild(messageElement);
             }
 
