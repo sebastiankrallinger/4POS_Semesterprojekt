@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('User saved');
                 document.getElementById("username-info").hidden = false;
                 document.getElementById("username-info").innerText = "";
+                localStorage.setItem('username', username);
                 window.location.href = '/app/mainPage';
             }else {
                 console.log('Passwort Falsch')

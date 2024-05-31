@@ -1,5 +1,6 @@
 let active_chat = null;
 let previous_chat = null;
+let username = null;
 
 let socket = new WebSocket("ws://localhost:8080/ws");
 
@@ -20,6 +21,8 @@ function sendMessage(message) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    username = localStorage.getItem('username');
+    console.log("username: " + username);
     getChats();
 });
 
@@ -53,7 +56,7 @@ function showChats(chats){
 
     const headerElement = document.createElement('h2');
 
-    headerElement.textContent = 'Deine Chats';
+    headerElement.textContent = 'Deine Chats - ' + username;
     chatListElement.appendChild(headerElement);
 
     chats.forEach(chat => {
@@ -117,7 +120,6 @@ function showMessages(messages) {
 }
 
 async function getUserId() {
-    let username = await getUsername();
     return fetch(`/app/users`)
         .then(response => response.json())
         .then(users => {
@@ -130,11 +132,6 @@ async function getUserId() {
         });
 }
 
-function getUsername() {
-    return fetch(`/app/username`)
-        .then(response => response.text());
-}
-
 function addChat(){
     let receiver
     let chatName
@@ -143,7 +140,7 @@ function addChat(){
         .then(userId => {
             receiver = prompt('Reveiver: ')
             chatName = prompt('Chat-Name:');
-            if (chatName) {
+            if (chatName && receiver) {
                 return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
                     method: 'POST'
                 });
