@@ -116,8 +116,8 @@ function showMessages(messages) {
     }
 }
 
-function getUserId(){
-    var username = getParameterByName('username');
+async function getUserId() {
+    let username = await getUsername();
     return fetch(`/app/users`)
         .then(response => response.json())
         .then(users => {
@@ -130,14 +130,9 @@ function getUserId(){
         });
 }
 
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+function getUsername() {
+    return fetch(`/app/username`)
+        .then(response => response.text());
 }
 
 function addChat(){

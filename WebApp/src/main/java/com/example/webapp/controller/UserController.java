@@ -27,6 +27,7 @@ public class UserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final UserService userService;
     private final WebSocketHandler webSocketHandler;
+    private String active_user;
 
     @Autowired
     public UserController(UserService userService, WebSocketHandler webSocketHandler) {
@@ -44,12 +45,14 @@ public class UserController {
         boolean existingUser = false;
 
         if (users.size() == 0){
+            active_user = user.getUsername();
             return userService.save(new UserDto(user));
         }
         for (UserDto u:users) {
             existingUser = user.equalsUsername(u.toUserEntity());
             if (existingUser == true) {
                 if (user.checkPassword(u.toUserEntity()) == true){
+                    active_user = user.getUsername();
                     System.out.println("Passwort richtig!");
                     return u;
                 }else {
@@ -59,9 +62,16 @@ public class UserController {
             }
         }
         if (existingUser == false) {
+            active_user = user.getUsername();
             return userService.save(new UserDto(user));
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Anmeldeinformationen ungültig");
+    }
+
+    //alle User aus der DB holen
+    @GetMapping("username")
+    public String getUsername() {
+        return active_user;
     }
 
     //alle User aus der DB holen
