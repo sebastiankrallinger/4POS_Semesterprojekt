@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TinyWhatsApp</title>
     <link rel="stylesheet" href="/mainPage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -13,12 +14,15 @@
 <div class="maincontainer">
     <div class="container">
         <div class="chats" id="chatList"></div>
-        <button class="addchat" id="newBtn" onclick="addChat()">Chat hinzufügen</button>
-    </div>
+        <div class="input-container">
+            <button class="addchat" id="newBtn" onclick="addChat()">Chat hinzufügen</button>
+        </div>    </div>
     <div class="container2">
         <div class="messages" id="messageList"></div>
+        <div class="input-container">
             <input class="inputMsg" type="text" id="txtMsg" placeholder="Nachricht...">
-            <button class="addmsg" id="btnMsg" onclick="addMsg()">Nachricht senden</button>
+            <button class="addmsg" id="btnMsg" onclick="addMsg()"><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
 </div>
 <script src="/mainPage.js"></script>

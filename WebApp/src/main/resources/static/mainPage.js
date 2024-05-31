@@ -1,5 +1,6 @@
 let active_chat = null;
 let previous_chat = null;
+let previous_date = null;
 let username = null;
 
 let socket = new WebSocket("ws://localhost:8080/ws");
@@ -56,6 +57,7 @@ function showChats(chats){
 
     const headerElement = document.createElement('h2');
 
+    headerElement.className = "headChats";
     headerElement.textContent = 'Deine Chats - ' + username;
     chatListElement.appendChild(headerElement);
 
@@ -71,7 +73,7 @@ function showChats(chats){
         chatButton.textContent = chat.bezeichnung; // Bezeichnung des Chats
         if (chat.newMsg === true){
             chatButton.style.fontWeight = 'bold';
-            chatButton.style.backgroundColor = '#FFD700';
+            chatButton.style.backgroundColor = 'lightgreen';
         }
         chatButton.classList.add('chat-button');
 
@@ -89,6 +91,7 @@ function showChats(chats){
                 previous_chat.style.backgroundColor = '';
             }
             previous_chat = chatButton;
+            previous_date = null;
             updateStatus(active_chat);
             showMessages(active_chat.messages);
         });
@@ -104,12 +107,24 @@ function showMessages(messages) {
     //console.log(messages)
     if (messages != null) {
         messages.forEach(message => {
+            let dateString = message.date;
+            let [datePart, timePart] = dateString.split(' ');
+            let [day, month, year] = datePart.split('-');
+            let formattedDate = `${day}.${month}.${year}`;
+            if (formattedDate != previous_date){
+                previous_date = formattedDate;
+                let dateElement = document.createElement('div');
+                dateElement.textContent = formattedDate;
+                dateElement.className = "date";
+                messageListElement.appendChild(dateElement);
+            }
             if (message.receiver == false) {
-                const messageElement = document.createElement('div');
+                let messageElement = document.createElement('div');
                 messageElement.textContent = message.message;
+                messageElement.className = "msgSent";
                 messageListElement.appendChild(messageElement);
             }else if (message.receiver == true){
-                const messageElement = document.createElement('div');
+                let messageElement = document.createElement('div');
                 messageElement.textContent = message.message;
                 messageElement.className = "msgReceived";
                 messageListElement.appendChild(messageElement);
