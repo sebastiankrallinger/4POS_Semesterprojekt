@@ -30,5 +30,12 @@ namespace WpfClient
             }
             
         }
+
+        public MessageItem(string date)
+        {
+            Text = date;
+            Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E6E6E6"));
+            HorizontalAlignment = HorizontalAlignment.Center;
+        }
     }
 }

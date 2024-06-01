@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="bg.jpg" />
     <None Remove="bg_chats.jpg" />
+    <None Remove="icon.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
   <ItemGroup>
     <Resource Include="bg.jpg" />
     <Resource Include="bg_chats.jpg" />
+    <Resource Include="icon.jpg" />
   </ItemGroup>
 
   <ItemGroup>

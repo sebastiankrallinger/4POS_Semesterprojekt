@@ -7,24 +7,25 @@
         mc:Ignorable="d"
         Title="TinyWhatsApp"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize" Height="1026">
+        ResizeMode="NoResize" Height="1026" Icon="/icon.jpg">
     <Grid x:Name="GridChats" Background="#FF303030">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="59.389"/>
+            <ColumnDefinition Width="290.611"/>
             <ColumnDefinition Width="800"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="772"/>
             <RowDefinition Height="250" />
         </Grid.RowDefinitions>
-        <ListView x:Name="LstBoxChats" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,795,0" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"  SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" Height="772" VerticalAlignment="Top">
+        <ListView x:Name="LstBoxChats" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,795,0" Grid.Column="0" Grid.ColumnSpan="3"  SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" Height="772" VerticalAlignment="Center">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox x:Name="LstBoxMsgs" MaxHeight="784" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="772">
+        <ListBox x:Name="LstBoxMsgs" MaxHeight="784" Grid.Column="2" Grid.Row="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="772">
             <ListBox.Background>
                 <ImageBrush ImageSource="/bg_chats.jpg" Stretch="None" TileMode="None"/>
             </ListBox.Background>
@@ -41,12 +42,12 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <TextBox x:Name="txtNewMsg" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="27,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="594" Height="58" Text=""/>
-        <Button x:Name="btnSend" Grid.Column="1" Grid.Row="1" Content="Send" Height="54" Margin="654,24,0,0" VerticalAlignment="Top" Click="btnSend_Click" HorizontalAlignment="Left" Width="136"/>
-        <Button x:Name="btnAddChat" Content="AddChat" Grid.Row="1" HorizontalAlignment="Center" Height="30" Margin="0,185,0,0" VerticalAlignment="Top" Width="244" Click="btnAddChat_Click" Background="WhiteSmoke"/>
-        <TextBox x:Name="txtChat"  HorizontalAlignment="Left" Grid.Row="1" Height="50" Margin="148,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Grid.Row="1" Height="50" Margin="148,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="12,28,0,0" VerticalAlignment="Top" Width="204" OpacityMask="Black" Foreground="White" FontSize="16" Grid.Row="1"/>
-        <Label Content="ChatName:" HorizontalAlignment="Left" Grid.Row="1" Margin="12,108,0,0" VerticalAlignment="Top" Height="50" Width="206" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="txtNewMsg" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="27,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="594" Height="58" Text="" Visibility="Hidden"/>
+        <Button x:Name="btnSend" Grid.Column="2" Grid.Row="1" Content="Send" Height="54" Margin="654,24,0,0" VerticalAlignment="Top" Click="btnSend_Click" HorizontalAlignment="Left" Width="136" Visibility="Hidden"/>
+        <Button x:Name="btnAddChat" Content="AddChat" Grid.Row="1" HorizontalAlignment="Center" Height="30" Margin="0,185,0,0" VerticalAlignment="Top" Width="244" Click="btnAddChat_Click" Background="WhiteSmoke" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="txtChat"  HorizontalAlignment="Left" Grid.Row="1" Height="50" Margin="89,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Grid.Column="1"/>
+        <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Grid.Row="1" Height="50" Margin="89,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Grid.Column="1"/>
+        <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="12,28,0,0" VerticalAlignment="Top" Width="204" OpacityMask="Black" Foreground="White" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Content="ChatName:" HorizontalAlignment="Left" Grid.Row="1" Margin="12,108,0,0" VerticalAlignment="Top" Height="50" Width="206" Foreground="White" FontSize="16" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

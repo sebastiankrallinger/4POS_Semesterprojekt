@@ -12,6 +12,7 @@ namespace WpfClient
     {
         private User currentUser;
         private Chat activeChat;
+        private string previousDate;
         private ClientWebSocket webSocket;
         private Style receivedStyle;
         private Style sentStyle;
@@ -79,8 +80,18 @@ namespace WpfClient
 
                         LstBoxMsgs.Items.Clear();
                         List<Message> msgs = activeChat.messages;
+                        previousDate = "";
                         foreach (Message m in msgs)
                         {
+                            string[] dateTime = m.date.Split(" ");
+                            string[] dayMonthYear = dateTime[0].Split("-");
+                            string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
+                            if (formattedDate != previousDate)
+                            {
+                                previousDate = formattedDate;
+                                MessageItem dateItem = new MessageItem(formattedDate);
+                                LstBoxMsgs.Items.Add(dateItem);
+                            }
                             MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
                             LstBoxMsgs.Items.Add(messageItem);
                         }
@@ -150,10 +161,20 @@ namespace WpfClient
                         activeChat = c;
                         LstBoxMsgs.Items.Clear();
                         List<Message> msgs = activeChat.messages;
+                        previousDate = "";
                         if (msgs != null)
                         {
                             foreach (Message m in msgs)
                             {
+                                string[] dateTime = m.date.Split(" ");
+                                string[] dayMonthYear = dateTime[0].Split("-");
+                                string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
+                                if (formattedDate != previousDate)
+                                {
+                                    previousDate = formattedDate;
+                                    MessageItem dateItem = new MessageItem(formattedDate);
+                                    LstBoxMsgs.Items.Add(dateItem);
+                                }
                                 MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
                                 LstBoxMsgs.Items.Add(messageItem);
                             }
@@ -209,8 +230,18 @@ namespace WpfClient
                         //GUI aktualisieren
                         LstBoxMsgs.Items.Clear();
                         List<Message> msgs = activeChat.messages;
+                        previousDate = "";
                         foreach (Message m in msgs)
                         {
+                            string[] dateTime = m.date.Split(" ");
+                            string[] dayMonthYear = dateTime[0].Split("-");
+                            string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
+                            if (formattedDate != previousDate)
+                            {
+                                previousDate = formattedDate;
+                                MessageItem dateItem = new MessageItem(formattedDate);
+                                LstBoxMsgs.Items.Add(dateItem);
+                            }
                             MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
                             LstBoxMsgs.Items.Add(messageItem);
                         }
