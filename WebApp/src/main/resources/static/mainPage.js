@@ -127,7 +127,7 @@ function showMessages(messages) {
                 messageElement.className = "msgSent";
                 messageElement.appendChild(timeElement);
                 messageListElement.appendChild(messageElement);
-            }else if (message.receiver == true){
+            } else if (message.receiver == true){
                 let messageElement = document.createElement('div');
                 let timeElement = document.createElement('div');
                 timeElement.textContent = timePart;
@@ -137,9 +137,15 @@ function showMessages(messages) {
                 messageElement.appendChild(timeElement);
                 messageListElement.appendChild(messageElement);
             }
-
         });
+
+        scrollToBottom();
     }
+}
+
+function scrollToBottom() {
+    const messageListElement = document.getElementById('messageList');
+    messageListElement.scrollTop = messageListElement.scrollHeight;
 }
 
 async function getUserId() {
@@ -156,17 +162,19 @@ async function getUserId() {
 }
 
 function addChat(){
-    let receiver
-    let chatName
+    let receiver;
+    let chatName;
 
     getUserId()
         .then(userId => {
-            receiver = prompt('Empfänger (Username) eingeben: ')
+            receiver = prompt('Empfänger (Username) eingeben: ');
             chatName = prompt('Chat-Name eingeben:');
             if (chatName && receiver) {
                 return fetch(`/app/addChat?userId=${userId}&chatName=${encodeURIComponent(chatName)}&receiver=${receiver}`, {
                     method: 'POST'
                 });
+            }else {
+               throw new Error('Unvollständige Eingabe!')
             }
         })
         .then(response => {
@@ -178,6 +186,7 @@ function addChat(){
             }
         })
         .catch(error => {
+            alert(error);
             console.error('Fehler beim Hinzufügen des Chats:', error);
         });
 }
@@ -192,7 +201,7 @@ function updateStatus(chat){
 }
 
 function addMsg(){
-    let msg
+    let msg;
 
     getUserId()
         .then(userId => {
@@ -208,6 +217,7 @@ function addMsg(){
         .then(response => {
             if (response.ok) {
                 sendMessage("newMsg");
+                updateStatus(active_chat);
                 getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen der Msg.');
@@ -215,7 +225,7 @@ function addMsg(){
         })
         .catch(error => {
             console.error('Fehler beim Hinzufügen der Msg:', error);
-        })
+        });
 }
 
 function handleEnter(event) {

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //console.log('Passwort Falsch')
                 document.getElementById("username-info").hidden = true;
                 document.getElementById("username-info").innerText = "Falsches Passwort - erneut versuchen";
+                document.getElementById("password").value = "";
             }
         };
 
