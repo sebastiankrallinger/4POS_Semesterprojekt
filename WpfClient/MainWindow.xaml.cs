@@ -306,10 +306,16 @@ namespace WpfClient
                         //GUI aktualisieren
                         LstBoxChats.Items.Add(activeChat);
                     }
+                    else
+                    {
+                        throw new HttpRequestException("Daten fehlerhaft!");
+                    }
                 }
                 catch (HttpRequestException ex)
                 {
                     MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
+                    txtChat.Clear();
+                    txtReceiver.Clear();
                 }
             }
         }
