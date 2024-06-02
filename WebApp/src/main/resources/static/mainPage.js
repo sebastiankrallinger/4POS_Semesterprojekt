@@ -81,21 +81,21 @@ function showChats(chats){
         }
         chatButton.classList.add('chat-button');
 
-        chatButton.addEventListener('click', () => {
+        chatButton.addEventListener('click', async () => {
             active_chat = chat;
             let btn = document.getElementById('btnMsg');
             let txtBox = document.getElementById('txtMsg');
-            if (btn){
+            if (btn) {
                 btn.style.visibility = 'visible';
                 txtBox.style.visibility = 'visible';
             }
             chatButton.style.fontWeight = 'normal';
             chatButton.style.backgroundColor = 'lightgrey';
-            if (previous_chat != null && chatButton != previous_chat){
+            if (previous_chat != null && chatButton != previous_chat) {
                 previous_chat.style.backgroundColor = '';
             }
             previous_chat = chatButton;
-            updateStatus(active_chat);
+            await updateStatus(active_chat);
             showMessages(active_chat.messages);
         });
         chatListElement.appendChild(chatButton);
@@ -200,7 +200,7 @@ function addChat(){
 }
 
 //Chatstatus aktualisieren
-function updateStatus(chat){
+async function  updateStatus(chat){
     getUserId()
         .then(userId => {
             return fetch(`/app/updateStaus?id=${userId}&chatname=${chat.bezeichnung}`, {
@@ -224,10 +224,10 @@ function addMsg(){
                 });
             }
         })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
                 sendMessage("newMsg");
-                updateStatus(active_chat);
+                await updateStatus(active_chat);
                 getChats();
             } else {
                 throw new Error('Fehler beim Hinzufügen der Msg.');
@@ -242,7 +242,6 @@ function addMsg(){
 function handleEnter(event) {
     if (event.keyCode === 13) {
         event.preventDefault();
-
         addMsg();
     }
 }

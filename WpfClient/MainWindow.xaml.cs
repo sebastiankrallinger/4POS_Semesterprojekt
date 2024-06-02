@@ -148,6 +148,7 @@ namespace WpfClient
                     LstBoxMsgs.Items.Add(messageItem);
                 }
             }
+            LstBoxMsgs.ScrollIntoView(LstBoxMsgs.Items[LstBoxMsgs.Items.Count - 1]);
         }
 
         //Chatauswahl des Benutzers verwalten
@@ -202,7 +203,7 @@ namespace WpfClient
         }
 
         //Nachricht senden
-        private async void btnSend_Click(object sender, RoutedEventArgs e)
+        private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             sendMessage();
         }
@@ -244,8 +245,8 @@ namespace WpfClient
                         string responseBody = await response.Content.ReadAsStringAsync();
                         activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
 
-                        //GUI aktualisieren
-                        showMessges(activeChat);
+                        await updateStatus(activeChat);
+                        loadChats();
                     }
 
                 }
