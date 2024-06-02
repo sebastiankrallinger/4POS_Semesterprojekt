@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text;
@@ -64,39 +67,7 @@ namespace WpfClient
                     //MessageBox.Show($"Received: {message}\n");
 
                     //WS-Nachricht verarbeiten
-                    if(message == "newChat")
-                    {
-                        loadChats();
-                    }else if (message == "newMsg")
-                    {
-                        //Messages neu laden
-                        HttpClient httpClient = new HttpClient();
-                        string url = $"http://localhost:8080/app/users/{currentUser.id}/chat/{activeChat.bezeichnung}";
-
-                        HttpResponseMessage response = await httpClient.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-
-                        string responseBody = await response.Content.ReadAsStringAsync();
-                        activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
-
-                        LstBoxMsgs.Items.Clear();
-                        List<Message> msgs = activeChat.messages;
-                        previousDate = "";
-                        foreach (Message m in msgs)
-                        {
-                            string[] dateTime = m.date.Split(" ");
-                            string[] dayMonthYear = dateTime[0].Split("-");
-                            string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
-                            if (formattedDate != previousDate)
-                            {
-                                previousDate = formattedDate;
-                                MessageItem dateItem = new MessageItem(formattedDate);
-                                LstBoxMsgs.Items.Add(dateItem);
-                            }
-                            MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
-                            LstBoxMsgs.Items.Add(messageItem);
-                        }
-                    }
+                    loadChats();
                 }
             }
         }
@@ -124,16 +95,54 @@ namespace WpfClient
                 {
                     foreach (Chat c in chats)
                     {
-                        LstBoxChats.Items.Add(c.bezeichnung);
+                        if (c.newMsg == true)
+                        {
+                            c.BackgroundColor = Brushes.LightGreen;
+                        }
+                        else if (c.newMsg == false)
+                        {
+                            c.BackgroundColor = Brushes.Transparent;
+                        }
+                        LstBoxChats.Items.Add(c);
+
+                        if (activeChat != null && activeChat.bezeichnung == c.bezeichnung)
+                        {
+                            activeChat = c;
+                            showMessges(activeChat);
+                        }
                     }
                 }
-                
+
             }
             catch (HttpRequestException ex)
             {
                 MessageBox.Show($"Fehler beim Abrufen der Chats: {ex.Message}");
             }
 
+        }
+
+        private void showMessges(Chat c)
+        {
+            LstBoxMsgs.Items.Clear();
+            List<Message> msgs = activeChat.messages;
+            previousDate = "";
+            if (msgs != null)
+            {
+                foreach (Message m in msgs)
+                {
+                    string[] dateTime = m.date.Split(" ");
+                    string[] dayMonthYear = dateTime[0].Split("-");
+                    string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
+                    if (formattedDate != previousDate)
+                    {
+                        previousDate = formattedDate;
+                        MessageItem dateItem = new MessageItem(formattedDate);
+                        LstBoxMsgs.Items.Add(dateItem);
+                    }
+                    MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
+                    LstBoxMsgs.Items.Add(messageItem);
+                }
+            }
         }
 
         //Nachrichten des ausgewählten Chats anzeigen
@@ -154,32 +163,22 @@ namespace WpfClient
 
                 List<Chat> chats = JsonConvert.DeserializeObject<List<Chat>>(responseBody);
 
+                if (e.AddedItems.Count == 0)
+                {
+                    return;
+                }
+
+                Chat item = (Chat)e.AddedItems[0];
+                lblHeadMsgs.Content = item.bezeichnung;
+
                 //GUI aktualisieren
                 foreach (Chat c in chats)
                 {
-                    if (e.AddedItems[0].ToString() == c.bezeichnung)
+                    if (item.bezeichnung == c.bezeichnung)
                     {
                         activeChat = c;
-                        LstBoxMsgs.Items.Clear();
-                        List<Message> msgs = activeChat.messages;
-                        previousDate = "";
-                        if (msgs != null)
-                        {
-                            foreach (Message m in msgs)
-                            {
-                                string[] dateTime = m.date.Split(" ");
-                                string[] dayMonthYear = dateTime[0].Split("-");
-                                string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
-                                if (formattedDate != previousDate)
-                                {
-                                    previousDate = formattedDate;
-                                    MessageItem dateItem = new MessageItem(formattedDate);
-                                    LstBoxMsgs.Items.Add(dateItem);
-                                }
-                                MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
-                                LstBoxMsgs.Items.Add(messageItem);
-                            }
-                        }
+                        await updateStatus(c);
+                        loadChats();
                     }
                 }
             }
@@ -199,10 +198,10 @@ namespace WpfClient
                 string url = $"http://localhost:8080/app/addMsg?id={currentUser.id}&chatname={activeChat.bezeichnung}&msg={txtNewMsg.Text}&receiver={activeChat.receiver}";
 
                 try
-                {                
+                {
                     //Message an Server senden
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
-                    if (response.IsSuccessStatusCode) 
+                    if (response.IsSuccessStatusCode)
                     {
                         var message = "newMsg";
                         var messageBuffer = Encoding.UTF8.GetBytes(message);
@@ -229,23 +228,7 @@ namespace WpfClient
                         activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
 
                         //GUI aktualisieren
-                        LstBoxMsgs.Items.Clear();
-                        List<Message> msgs = activeChat.messages;
-                        previousDate = "";
-                        foreach (Message m in msgs)
-                        {
-                            string[] dateTime = m.date.Split(" ");
-                            string[] dayMonthYear = dateTime[0].Split("-");
-                            string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
-                            if (formattedDate != previousDate)
-                            {
-                                previousDate = formattedDate;
-                                MessageItem dateItem = new MessageItem(formattedDate);
-                                LstBoxMsgs.Items.Add(dateItem);
-                            }
-                            MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
-                            LstBoxMsgs.Items.Add(messageItem);
-                        }
+                        showMessges(activeChat);
                     }
 
                 }
@@ -260,7 +243,7 @@ namespace WpfClient
         //neuen Chat hinzufuegen
         private async void btnAddChat_Click(object sender, RoutedEventArgs e)
         {
-            if (txtReceiver.Text != null && txtChat != null) 
+            if (txtReceiver.Text != null && txtChat != null)
             {
                 string receiver = txtReceiver.Text;
                 string chatName = txtChat.Text;
@@ -302,13 +285,31 @@ namespace WpfClient
                         activeChat = JsonConvert.DeserializeObject<Chat>(responseBody);
 
                         //GUI aktualisieren
-                        LstBoxChats.Items.Add(activeChat.bezeichnung);
+                        LstBoxChats.Items.Add(activeChat);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
                     MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
                 }
+            }
+        }
+
+        private async 
+        Task
+updateStatus(Chat c)
+        {
+            HttpClient httpClient = new HttpClient();
+            string url = $"http://localhost:8080/app/updateStaus?id={currentUser.id}&chatname={c.bezeichnung}";
+
+            try
+            {
+                //Daten an Server senden
+                await httpClient.PostAsync(url, null);
+            }
+            catch (HttpRequestException ex)
+            {
+                MessageBox.Show($"Fehler beim updaten des Status: {ex.Message}");
             }
         }
     }
