@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace WpfClient
@@ -192,9 +193,21 @@ namespace WpfClient
             }
         }
 
+        private void sendEnterHandler(Object sender, KeyEventArgs e) 
+        {
+            if (e.Key == Key.Enter)
+            {
+                sendMessage();
+            }
+        }
 
         //Nachricht senden
         private async void btnSend_Click(object sender, RoutedEventArgs e)
+        {
+            sendMessage();
+        }
+
+        private async void sendMessage()
         {
             if (txtNewMsg.Text != "")
             {
@@ -242,7 +255,7 @@ namespace WpfClient
                 }
             }
             txtNewMsg.Clear();
-        }
+        } 
 
         //neuen Chat hinzufuegen
         private async void btnAddChat_Click(object sender, RoutedEventArgs e)
