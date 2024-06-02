@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
         Title="TinyWhatsApp"
-        Height="Auto" Width="1167" MaxWidth="1200"
+        WindowState="Maximized" 
+        Loaded="Window_Loaded"
         ResizeMode="NoResize" Icon="/icon.jpg">
     <ScrollViewer>
         <Grid x:Name="GridChats" Background="#FF303030" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MaxHeight="772"/>

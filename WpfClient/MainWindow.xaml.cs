@@ -29,6 +29,11 @@ namespace WpfClient
             connectWebSocket();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
+
         //Verbindung zum Websocket herstellen
         private async void connectWebSocket()
         {
