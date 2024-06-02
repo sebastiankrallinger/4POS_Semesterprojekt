@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ListView x:Name="LstBoxChats" Margin="0,52,0,0" Grid.Column="0" Grid.ColumnSpan="1" SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" VerticalAlignment="Top" OpacityMask="Black">
