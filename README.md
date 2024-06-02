@@ -16,7 +16,7 @@ graph TD;
 
 ## Beschreibung der Software
 
-Die Chatapp bietet die Möglichkeit, dass Benutzer, über eine einfache Benutzeroberfläche, miteinander kommunizieren können. Der Benutzer kann entscheiden ob er die App im Web oder als WPF-Anwendung verwendet. Es ist möglich meherer Chats mit verschiedenen Benutzern zu haben und mit allen zu kommunizieren.
+Die Chatapp bietet die Möglichkeit, dass Benutzer, über eine einfache Benutzeroberfläche, miteinander kommunizieren können. Der Benutzer kann entscheiden ob er die App im Web oder als WPF-Anwendung verwendet. Es ist möglich meherer Chats mit verschiedenen Benutzern zu haben und mit allen zu kommunizieren. Alle Chatverläufe werden in einer MongoDB-Datenbank gesichert und können immer wieder geladen werden.
 
 <br>
 
@@ -25,8 +25,8 @@ Die Chatapp bietet die Möglichkeit, dass Benutzer, über eine einfache Benutzer
 ### Login - Web
 ![Login Page der Webseite](.\images\login_Web.png)<br>
 <br>
-Im Eingabefeld **"Username"** wird der Benutzernamen eingegeben.<br>
-Im Eingabefeld **"Passwort"** wird das Passwort des Benutzers eingegeben.<br>
+Im Eingabefeld **"Username"** wird der Benutzernamen eingegeben. (Testuser Benutzernamen --> **testUser** / **testUser2** / **testUser3**)<br>
+Im Eingabefeld **"Passwort"** wird das Passwort des Benutzers eingegeben. (Testuser Passwörter --> **test** / **test1** / **test3**)<br>
 Beim klick auf den **"Login"** Button werden die Anmeldedaten überprüft und bei erfolgreicher Überprüfung wird der Benutzer auf die Hauptseite weitergeleitet.<br>
 Bei ungültigen oder unvollständigen Benutzerdaten wird der Benutzer darauf hingewiesen, dass seine Daten nicht korrekt sind und es kann ein neuer Versuch gestartet werden.<br>
 <br>
