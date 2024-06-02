@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="TinyWhatsApp"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize" Height="1026" Icon="/icon.jpg">
+        Height="Auto"
+        Width="Auto"
+        ResizeMode="NoResize" Icon="/icon.jpg">
     <Grid x:Name="GridChats" Background="#FF303030">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="59.389"/>
