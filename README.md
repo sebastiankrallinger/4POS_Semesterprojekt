@@ -457,7 +457,7 @@ classDiagram
 
   **Beschreibung:** Verbindung zum Websocket vom WPF Client.
 
-  **Web Client:**
+  **WPF Client:**
   ```csharp
     //Verbindung zum Websocket herstellen
     private async void connectWebSocket()
