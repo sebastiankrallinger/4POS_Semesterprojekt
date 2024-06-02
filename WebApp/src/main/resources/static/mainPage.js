@@ -3,6 +3,7 @@ let previous_chat = null;
 let previous_date = null;
 let username = null;
 
+//Websocket Verwaltung
 let socket = new WebSocket("ws://localhost:8080/ws");
 
 socket.onopen = function(event) {
@@ -21,12 +22,14 @@ function sendMessage(message) {
     socket.send(message);
 }
 
+//Daten am Beginn laden
 document.addEventListener("DOMContentLoaded", function() {
     username = localStorage.getItem('username');
     //console.log("username: " + username);
     getChats();
 });
 
+//Chats laden
 function getChats() {
     getUserId()
         .then(userId => {
@@ -50,6 +53,7 @@ function getChats() {
         });
 }
 
+//Chats anzeigen
 function showChats(chats){
     //console.log(chats)
     const chatListElement = document.getElementById('chatList');
@@ -98,6 +102,7 @@ function showChats(chats){
     });
 }
 
+//Nachrichten anzeigen
 function showMessages(messages) {
     //console.log(active_chat)
     previous_date = null;
@@ -143,11 +148,13 @@ function showMessages(messages) {
     }
 }
 
+//immer zur neuesten Nachricht scrollen
 function scrollToBottom() {
     const messageListElement = document.getElementById('messageList');
     messageListElement.scrollTop = messageListElement.scrollHeight;
 }
 
+//User ID abfragen
 async function getUserId() {
     return fetch(`/app/users`)
         .then(response => response.json())
@@ -161,6 +168,7 @@ async function getUserId() {
         });
 }
 
+//Chat hinzufügen
 function addChat(){
     let receiver;
     let chatName;
@@ -191,6 +199,7 @@ function addChat(){
         });
 }
 
+//Chatstatus aktualisieren
 function updateStatus(chat){
     getUserId()
         .then(userId => {
@@ -200,6 +209,7 @@ function updateStatus(chat){
         });
 }
 
+//Nachricht senden
 function addMsg(){
     let msg;
 
@@ -228,6 +238,7 @@ function addMsg(){
         });
 }
 
+//'Enter' EventHandler
 function handleEnter(event) {
     if (event.keyCode === 13) {
         event.preventDefault();

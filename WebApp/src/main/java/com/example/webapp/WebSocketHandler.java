@@ -14,7 +14,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
-    //neue Session zur Liste hinzufuegen
+    //neue Session zur Liste hinzufügen
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.put(session.getId(), session);

@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.open('POST', '/app/user', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
+        //Anmeldeinformationen prüfen
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 201) {
                 //console.log('User saved');

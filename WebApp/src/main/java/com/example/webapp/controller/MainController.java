@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/app")
 public class MainController {
 
-    //Loginpage zurueckgeben
+    //Loginpage zurückgeben
     @GetMapping("/Login")
     public String login(){
         return "loginPage";
     }
 
-    //Mainpage zurueckgeben
+    //Mainpage zurückgeben
     @GetMapping("/mainPage")
     public String mainPage(){
         return "mainPage";

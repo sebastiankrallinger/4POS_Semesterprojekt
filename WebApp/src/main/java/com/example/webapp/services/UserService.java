@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+//UserService Funktonalitäten
 @Service
 public class UserService implements IUserService{
     private final UserRepository userRepository;
@@ -50,10 +51,6 @@ public class UserService implements IUserService{
                 return c;
             }
         }
-        return null;
-    }
-
-    public MessageEntity getMsgsByChat(String chatId){
         return null;
     }
 

@@ -35,7 +35,7 @@ public class UserController {
         this.webSocketHandler = webSocketHandler;
     }
 
-    //Passwort ueberpruefen und User erstellen/zurueckgeben
+    //Passwort überprüfen und User erstellen/zurückgeben
     @PostMapping("user")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto postUser(@RequestBody UserDto userDto) {
@@ -91,14 +91,14 @@ public class UserController {
         return userService.getChatByUser(userId, chatId);
     }
 
-    //Chat hinzufuegen und Client ueber WS benachrichtigen
+    //Chat hinzufuegen und Client über WS benachrichtigen
     @PostMapping("addChat")
     @ResponseBody
     public void addChat(@RequestParam String userId, @RequestParam String chatName, @RequestParam String receiver) {
         userService.updateChats(getUser(userId), chatName, receiver);
     }
 
-    //Nachricht hinzufuegen und zum Empfaenger senden
+    //Nachricht hinzufügen und zum Empfänger senden
     @PostMapping("addMsg")
     @ResponseBody
     public void addMsg(@RequestParam String id, @RequestParam String chatname, @RequestParam String msg, @RequestParam String receiver) {
@@ -106,7 +106,7 @@ public class UserController {
         userService.updateMsg(getUser(id), chatname, msg, new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()), false);
     }
 
-    //Nachricht beim Empfaenger hinzufuegen
+    //Nachricht beim Empfänger hinzufügen
     @ResponseBody
     public void sendMsg(String id, String msg, String chatname) {
         UserDto user = getUser(id);
@@ -119,7 +119,7 @@ public class UserController {
         }
     }
 
-    //Chatstatus aendern
+    //Chatstatus ändern
     @PostMapping("updateStaus")
     @ResponseBody
     public void updateStaus(@RequestParam String id, @RequestParam String chatname) {
