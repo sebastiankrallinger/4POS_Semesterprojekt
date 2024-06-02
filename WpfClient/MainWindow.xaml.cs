@@ -121,11 +121,13 @@ namespace WpfClient
 
         }
 
+        //Nachrichten des ausgewählten Chats anzeigen
         private void showMessges(Chat c)
         {
             LstBoxMsgs.Items.Clear();
             List<Message> msgs = activeChat.messages;
             previousDate = "";
+
             if (msgs != null)
             {
                 foreach (Message m in msgs)
@@ -133,19 +135,21 @@ namespace WpfClient
                     string[] dateTime = m.date.Split(" ");
                     string[] dayMonthYear = dateTime[0].Split("-");
                     string formattedDate = dayMonthYear[0] + "." + dayMonthYear[1] + "." + dayMonthYear[2];
+
                     if (formattedDate != previousDate)
                     {
                         previousDate = formattedDate;
                         MessageItem dateItem = new MessageItem(formattedDate);
                         LstBoxMsgs.Items.Add(dateItem);
                     }
+
                     MessageItem messageItem = new MessageItem(m.message, m.receiver, m.date);
                     LstBoxMsgs.Items.Add(messageItem);
                 }
             }
         }
 
-        //Nachrichten des ausgewählten Chats anzeigen
+        //Chatauswahl des Benutzers verwalten
         private async void LstBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             txtNewMsg.Visibility = Visibility.Visible;
@@ -184,7 +188,7 @@ namespace WpfClient
             }
             catch (HttpRequestException ex)
             {
-                MessageBox.Show($"Fehler beim Abrufen der Messages: {ex.Message}");
+                MessageBox.Show($"Fehler beim ausgewählten Chat: {ex.Message}");
             }
         }
 
@@ -199,8 +203,8 @@ namespace WpfClient
 
                 try
                 {
-                    //Message an Server senden
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
+
                     if (response.IsSuccessStatusCode)
                     {
                         var message = "newMsg";
@@ -253,7 +257,6 @@ namespace WpfClient
 
                 try
                 {
-                    //Daten an Server senden
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
                     if (response.IsSuccessStatusCode)
@@ -270,7 +273,7 @@ namespace WpfClient
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Send error: {ex.Message}\n");
+                            MessageBox.Show($"Fehler beim Hinzufügen des Chats: {ex.Message}\n");
                         }
 
                         txtChat.Clear();
@@ -295,16 +298,14 @@ namespace WpfClient
             }
         }
 
-        private async 
-        Task
-updateStatus(Chat c)
+        //Chat als gelesen makieren
+        private async Task updateStatus(Chat c)
         {
             HttpClient httpClient = new HttpClient();
             string url = $"http://localhost:8080/app/updateStaus?id={currentUser.id}&chatname={c.bezeichnung}";
 
             try
             {
-                //Daten an Server senden
                 await httpClient.PostAsync(url, null);
             }
             catch (HttpRequestException ex)

@@ -6,7 +6,6 @@ namespace WpfClient
 {
     class Chat
     {
-        //Properties der Eigenschaften
         public string bezeichnung { get; set; }
         public string receiver { get; set; }
         public bool newMsg { get; set; }
