@@ -18,7 +18,7 @@
             <RowDefinition Height="772"/>
             <RowDefinition Height="250" />
         </Grid.RowDefinitions>
-        <ListView x:Name="LstBoxChats" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,795,0" Grid.Column="0" Grid.ColumnSpan="3"  SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" Height="772" VerticalAlignment="Center">
+        <ListView x:Name="LstBoxChats" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,52,0,0" Grid.Column="0" Grid.ColumnSpan="2"  SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" Height="720" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -49,5 +49,6 @@
         <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Grid.Row="1" Height="50" Margin="89,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Grid.Column="1"/>
         <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="12,28,0,0" VerticalAlignment="Top" Width="204" OpacityMask="Black" Foreground="White" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Label Content="ChatName:" HorizontalAlignment="Left" Grid.Row="1" Margin="12,108,0,0" VerticalAlignment="Top" Height="50" Width="206" Foreground="White" FontSize="16" Grid.ColumnSpan="2"/>
+        <Label x:Name="lblHeadingChats" Content="TestContent" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="42" Width="350" Grid.ColumnSpan="2" Foreground="White" FontSize="20"/>
     </Grid>
 </Window>

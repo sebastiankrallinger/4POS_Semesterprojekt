@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Login.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
     <Page Update="MainWindow.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>

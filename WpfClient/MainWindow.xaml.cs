@@ -21,6 +21,7 @@ namespace WpfClient
         {
             InitializeComponent();
             currentUser = (User)user;
+            lblHeadingChats.Content = "Deine Chats - " + currentUser.username;
             loadChats();
             connectWebSocket();
         }
@@ -192,7 +193,7 @@ namespace WpfClient
         //Nachricht senden
         private async void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            if (txtNewMsg.Text != null)
+            if (txtNewMsg.Text != "")
             {
                 HttpClient httpClient = new HttpClient();
                 string url = $"http://localhost:8080/app/addMsg?id={currentUser.id}&chatname={activeChat.bezeichnung}&msg={txtNewMsg.Text}&receiver={activeChat.receiver}";
