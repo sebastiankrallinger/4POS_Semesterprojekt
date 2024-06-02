@@ -6,55 +6,57 @@
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
         Title="TinyWhatsApp"
-        ResizeMode="NoResize" Icon="/icon.jpg">
-    <ScrollViewer>
-        <Grid x:Name="GridChats" Background="#FF303030" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" MaxHeight="772"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ListView x:Name="LstBoxChats" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,52,0,0" Grid.Column="0" Grid.ColumnSpan="2"  SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" Height="720" VerticalAlignment="Top" OpacityMask="Black">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding bezeichnung}"/>
-                    </GridView>
-                </ListView.View>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Background" Value="{Binding BackgroundColor}"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            <ListBox x:Name="LstBoxMsgs" MaxHeight="784" Grid.Column="1" Grid.Row="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,25,0,0">
-                <ListBox.Background>
-                    <ImageBrush ImageSource="/bg_chats.jpg" Stretch="UniformToFill" TileMode="None"/>
-                </ListBox.Background>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="10" Padding="10" CornerRadius="5" Background="{Binding Background}">
-                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
-                        </Border>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment}" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-            <TextBox x:Name="txtNewMsg" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="27,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="572" Height="30" Text="" Visibility="Hidden"/>
-            <Button x:Name="btnSend" Grid.Column="1" Grid.Row="1" Content="Send" Height="30" Margin="626,24,0,0" VerticalAlignment="Top" Click="btnSend_Click" HorizontalAlignment="Left" Width="136" Visibility="Hidden"/>
-            <Button x:Name="btnAddChat" Content="Chat hinzufügen" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="115,104,0,0" VerticalAlignment="Top" Width="196" Click="btnAddChat_Click" Background="WhiteSmoke"/>
-            <TextBox x:Name="txtChat"  HorizontalAlignment="Left" Grid.Row="1" Height="26" Margin="115,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Grid.Column="0"/>
-            <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Grid.Row="1" Height="26" Margin="114,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Grid.Column="0"/>
-            <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="12,26,0,0" VerticalAlignment="Top" Width="204" OpacityMask="Black" Foreground="White" FontSize="16" Grid.Row="1" Grid.Column="0"/>
-            <Label Content="ChatName:" HorizontalAlignment="Left" Grid.Row="1" Margin="12,59,0,0" VerticalAlignment="Top" Height="50" Width="206" Foreground="White" FontSize="16" Grid.Column="0"/>
-            <Label x:Name="lblHeadingChats" Content="TestContent" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="42" Width="350" Grid.Column="0" Foreground="White" FontSize="20"/>
-            <Label x:Name="lblHeadMsgs" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top" Width="400" Background="Transparent" Foreground="White" FontSize="18"/>
-        </Grid>
-    </ScrollViewer>
+        ResizeMode="NoResize" 
+        Icon="/icon.jpg">
+    <Grid x:Name="GridChats" Background="#FF303030" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="LstBoxChats" Margin="0,52,0,0" Grid.Column="0" Grid.ColumnSpan="1" SelectionChanged="LstBoxChats_SelectionChanged" Background="#FF303030" Foreground="White" FontSize="18" VerticalAlignment="Top" OpacityMask="Black">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding bezeichnung}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="{Binding BackgroundColor}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <ListBox x:Name="LstBoxMsgs" Grid.Column="1" Grid.Row="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,25,0,0" VerticalAlignment="Stretch">
+            <ListBox.Background>
+                <ImageBrush ImageSource="/bg_chats.jpg" Stretch="UniformToFill" TileMode="None" />
+            </ListBox.Background>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="10" Padding="10" CornerRadius="5" Background="{Binding Background}">
+                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment}" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <TextBox x:Name="txtNewMsg" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="27,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="625" Height="30" Text="" Visibility="Hidden" />
+        <Button x:Name="btnSend" Grid.Column="1" Grid.Row="1" Content="Send" Height="30" Margin="674,24,0,0" VerticalAlignment="Top" Click="btnSend_Click" HorizontalAlignment="Left" Width="88" Visibility="Hidden" />
+        <Button x:Name="btnAddChat" Content="Chat hinzufügen" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="115,104,0,0" VerticalAlignment="Top" Width="196" Click="btnAddChat_Click" Background="WhiteSmoke" />
+        <TextBox x:Name="txtChat" HorizontalAlignment="Left" Grid.Row="1" Height="26" Margin="115,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Grid.Column="0" />
+        <TextBox x:Name="txtReceiver" HorizontalAlignment="Left" Grid.Row="1" Height="26" Margin="114,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Grid.Column="0" />
+        <Label Content="Receiver:" HorizontalAlignment="Left" Height="50" Margin="12,26,0,0" VerticalAlignment="Top" Width="204" OpacityMask="Black" Foreground="White" FontSize="16" Grid.Row="1" Grid.Column="0" />
+        <Label Content="ChatName:" HorizontalAlignment="Left" Grid.Row="1" Margin="12,59,0,0" VerticalAlignment="Top" Height="50" Width="206" Foreground="White" FontSize="16" Grid.Column="0" />
+        <Label x:Name="lblHeadingChats" Content="TestContent" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="42" Width="350" Grid.Column="0" Foreground="White" FontSize="20" />
+        <Label x:Name="lblHeadMsgs" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top" Width="400" Background="Transparent" Foreground="White" FontSize="18" />
+    </Grid>
 </Window>
