@@ -101,7 +101,7 @@ Bei klick auf den **"Chat hinzufügen"** Button kann der Benutzer einen neuen Ch
 Der Benutzer gibt zuerst den Benutzername des Empfängers in das Textfeld **"Empfänger"** und dann den Namen des Chats in das Textfeld **"Chatname"** ein, sobald diese Eingabe erfolgt ist wird der Chat erstellt und im Chatfeld angezeigt.<br>
 <br>
 
-![Chat hinzufügen](images/AddChat_Wpf.png)<br>
+![Chat hinzufügen](images/addChat_Wpf.png)<br>
 
 <br>
 
