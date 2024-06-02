@@ -23,7 +23,7 @@ function sendMessage(message) {
 
 document.addEventListener("DOMContentLoaded", function() {
     username = localStorage.getItem('username');
-    console.log("username: " + username);
+    //console.log("username: " + username);
     getChats();
 });
 
@@ -91,7 +91,6 @@ function showChats(chats){
                 previous_chat.style.backgroundColor = '';
             }
             previous_chat = chatButton;
-            previous_date = null;
             updateStatus(active_chat);
             showMessages(active_chat.messages);
         });
@@ -101,6 +100,7 @@ function showChats(chats){
 
 function showMessages(messages) {
     //console.log(active_chat)
+    previous_date = null;
     const messageListElement = document.getElementById('messageList');
     messageListElement.innerHTML = '';
 

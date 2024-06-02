@@ -50,10 +50,10 @@ public class UserController {
             existingUser = user.equalsUsername(u.toUserEntity());
             if (existingUser == true) {
                 if (user.checkPassword(u.toUserEntity()) == true){
-                    System.out.println("Passwort richtig!");
+                    //System.out.println("Passwort richtig!");
                     return u;
                 }else {
-                    System.out.println("Passwort falsch!");
+                    //System.out.println("Passwort falsch!");
                     break;
                 }
             }
@@ -87,7 +87,7 @@ public class UserController {
     //Chat eines Users aus der DB holen
     @GetMapping("/users/{userId}/chat/{chatId}")
     public ChatEntity getChatByUser(@PathVariable String userId, @PathVariable String chatId) {
-        System.out.println(userService.getChatByUser(userId, chatId));
+        //System.out.println(userService.getChatByUser(userId, chatId));
         return userService.getChatByUser(userId, chatId);
     }
 
