@@ -194,6 +194,7 @@ namespace WpfClient
             }
         }
 
+        //'Enter' EventHandler
         private void sendEnterHandler(Object sender, KeyEventArgs e) 
         {
             if (e.Key == Key.Enter)
@@ -202,12 +203,13 @@ namespace WpfClient
             }
         }
 
-        //Nachricht senden
+        //Button EventHandler
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             sendMessage();
         }
 
+        //Nachricht senden
         private async void sendMessage()
         {
             if (txtNewMsg.Text != "")
@@ -258,7 +260,7 @@ namespace WpfClient
             txtNewMsg.Clear();
         } 
 
-        //neuen Chat hinzufuegen
+        //neuen Chat hinzufügen
         private async void btnAddChat_Click(object sender, RoutedEventArgs e)
         {
             if (txtReceiver.Text != null && txtChat != null)
