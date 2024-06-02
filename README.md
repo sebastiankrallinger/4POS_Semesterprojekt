@@ -28,14 +28,14 @@ Im Eingabefeld **"Passwort"** wird das Passwort des Benutzers eingegeben. (Testu
 Beim klick auf den **"Login"** Button werden die Anmeldedaten überprüft und bei erfolgreicher Überprüfung wird der Benutzer auf die Hauptseite weitergeleitet.<br>
 Bei ungültigen oder unvollständigen Benutzerdaten wird der Benutzer darauf hingewiesen, dass seine Daten nicht korrekt sind und es kann ein neuer Versuch gestartet werden.<br>
 <br>
-![Fehlerhafte Benutzerdaten](.\images\incorrectPassword_Web.png)<br>
+![Fehlerhafte Benutzerdaten](images/incorrectPassword_Web.png)<br>
 <br>
-![Unvollständige Benutzerdaten](.\images\incompleteInformation_Web.png)<br>
+![Unvollständige Benutzerdaten](images/incompleteInformation_Web.png)<br>
 <br>
 Wenn der eingegeben Benutzername noch nicht vorhanden ist wird ein neuer Benutzer erstellt und danach die Hauptseite geladen.
 
 ### Mainpage - Web
-![Mainpage der Webseite](.\images\mainPage_Web.png)<br>
+![Mainpage der Webseite](images/mainPage_Web.png)<br>
 <br>
 
 #### Chats - Web
@@ -44,39 +44,39 @@ Bei klick auf einen Chat werden rechts die Nachrichten des Chats angezeigt.<br>
 Bei klick auf den **"Chat hinzufügen"** Button kann der Benutzer einen neuen Chat erstellen.<br>
 Der Benutzer gibt zuerst den Benutzername des Empfängers und dann den Namen des Chats ein, sobald diese Eingabe erfolgt ist wird der Chat erstellt und im Chatfeld angezeigt.<br>
 <br>
-![Chat hinzufügen](.\images\AddChat1_Web.png)<br>
-![Chat hinzufügen](.\images\AddChat2_Web.png)<br>
+![Chat hinzufügen](images/AddChat1_Web.png)<br>
+![Chat hinzufügen](images/AddChat2_Web.png)<br>
 <br>
 
 
 #### Nachrichten - Web
-![Nachrichten](.\images\messages_Web.png)<br>
+![Nachrichten](images/messages_Web.png)<br>
 Im rechten Feld werden alle Nachrichten eines Chats angezeigt und in Echtzeit aktualisiert.<br>
 Bei klick auf den Button rechts unten oder durch drücken von **"ENTER"** kann der Benutzer einen neue Nachricht senden.<br>
 Der Benutzer gibt die Nachricht in das Textfeld ein, sobald die Eingabe erfolgt ist wird die Nachricht zum Empfänger gesendet.<br>
 Bei beiden wird die GUI aktualisiert und die neue Nachricht wird im Nachrichtenfeld angezeigt.<br>
 Bei einer neuen Nachricht wird dem Benutzer angezeigt in welchem Chat eine neue Nachricht eingegangen ist.<br> 
 <br>
-![Benachrichtigung neue Nachricht](.\images\newMessage_Web.png)<br>
+![Benachrichtigung neue Nachricht](images/newMessage_Web.png)<br>
 
 ### WPF-App - Funktionen
 
 ### Login - WPF
-![Login-Fenser der WPF-Anwendung](.\images\login_Wpf.png)<br>
+![Login-Fenser der WPF-Anwendung](images/login_Wpf.png)<br>
 <br>
 Im Eingabefeld **"Benutzername"** wird der Benutzernamen eingegeben. (Testuser Benutzernamen --> **testUser** / **testUser2** / **testUser3**)<br>
 Im Eingabefeld **"Passwort"** wird das Passwort des Benutzers eingegeben. (Testuser Passwörter --> **test** / **test1** / **test3**)<br>
 Beim klick auf den **"Login"** Button werden die Anmeldedaten überprüft und bei erfolgreicher Überprüfung wird der Benutzer auf das Hauptfenster weitergeleitet.<br>
 Bei ungültigen oder unvollständigen Benutzerdaten wird der Benutzer darauf hingewiesen, dass seine Daten nicht korrekt sind und es kann ein neuer Versuch gestartet werden.<br>
 <br>
-![Fehlerhafte Benutzerdaten](.\images\incorrectPassword_Wpf.png)<br>
+![Fehlerhafte Benutzerdaten](images/incorrectPassword_Wpf.png)<br>
 <br>
-![Unvollständige Benutzerdaten](.\images\incompleteInformation_Wpf.png)<br>
+![Unvollständige Benutzerdaten](images/incompleteInformation_Wpf.png)<br>
 <br>
 Wenn der eingegeben Benutzername noch nicht vorhanden ist wird ein neuer Benutzer erstellt.
 
 ### Hauptfenster - WPF
-![Hauptfenster WPF](.\images\MainWindow_Wpf.png)<br>
+![Hauptfenster WPF](images/MainWindow_Wpf.png)<br>
 <br>
 
 #### Chats - WPF
@@ -85,18 +85,18 @@ Bei klick auf einen Chat werden rechts die Nachrichten des Chats angezeigt.<br>
 Bei klick auf den **"Chat hinzufügen"** Button kann der Benutzer einen neuen Chat erstellen.<br>
 Der Benutzer gibt zuerst den Benutzername des Empfängers in das Textfeld **"Empfänger"** und dann den Namen des Chats in das Textfeld **"Chatname"** ein, sobald diese Eingabe erfolgt ist wird der Chat erstellt und im Chatfeld angezeigt.<br>
 <br>
-![Chat hinzufügen](.\images\AddChat_Wpf.png)<br>
+![Chat hinzufügen](images/AddChat_Wpf.png)<br>
 <br>
 
 #### Nachrichten - WPF
-![Nachrichten](.\images\messages_Wpf.png)<br>
+![Nachrichten](images/messages_Wpf.png)<br>
 Im rechten Feld werden alle Nachrichten eines Chats angezeigt und in Echtzeit aktualisiert.<br>
 Bei klick auf den Button rechts unten oder durch drücken von **"ENTER"** kann der Benutzer einen neue Nachricht senden.<br>
 Der Benutzer gibt die Nachricht in das Textfeld ein, sobald die Eingabe erfolgt ist wird die Nachricht zum Empfänger gesendet.<br>
 Bei beiden wird die GUI aktualisiert und die neue Nachricht wird im Nachrichtenfeld angezeigt.<br>
 Bei einer neuen Nachricht wird dem Benutzer angezeigt in welchem Chat eine neue Nachricht eingegangen ist.<br> 
 <br>
-![Benachrichtigung neue Nachricht](.\images\newMessage_Wpf.png)<br>
+![Benachrichtigung neue Nachricht](images/newMessage_Wpf.png)<br>
 
 <br>
 
