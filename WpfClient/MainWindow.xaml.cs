@@ -313,7 +313,7 @@ namespace WpfClient
                 }
                 catch (HttpRequestException ex)
                 {
-                    MessageBox.Show($"Fehler beim erstellen des Chats: {ex.Message}");
+                    MessageBox.Show($"Fehler beim hinzufügen des Chats: {ex.Message}");
                     txtChat.Clear();
                     txtReceiver.Clear();
                 }

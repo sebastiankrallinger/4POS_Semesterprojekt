@@ -9,6 +9,8 @@ using System.Windows.Media;
 namespace WpfClient
 {
     //Styling der verschiedenen Nachrichtentypen verwalten
+
+
     internal class MessageItem
     {
         public Brush Background { get; set; }
