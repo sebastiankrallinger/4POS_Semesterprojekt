@@ -60,6 +60,7 @@ namespace WpfClient
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtPassword.Password = "";
                 }
             }
             else
