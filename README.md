@@ -53,7 +53,8 @@ Der Benutzer gibt zuerst den Benutzername des Empfängers und dann den Namen des
 
 ![Chat hinzufügen](images/AddChat1_Web.png)<br>
 
-![Chat hinzufügen](images/AddChat2_Web.png)<br>
+![Chat hinzufügen](images/addChat2_Web.png)<br>
+
 <br>
 
 
