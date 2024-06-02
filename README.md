@@ -21,7 +21,7 @@ Die Chatapp bietet die Möglichkeit, dass Benutzer, über eine einfache Benutzer
 ## Web-App - Funktionen
 
 ### Login - Web
-![Login Page der Webseite](\images\login_Web.png)<br>
+![Login Page der Webseite](.\images\login_Web.png)<br>
 <br>
 Im Eingabefeld **"Username"** wird der Benutzernamen eingegeben. (Testuser Benutzernamen --> **testUser** / **testUser2** / **testUser3**)<br>
 Im Eingabefeld **"Passwort"** wird das Passwort des Benutzers eingegeben. (Testuser Passwörter --> **test** / **test1** / **test3**)<br>
