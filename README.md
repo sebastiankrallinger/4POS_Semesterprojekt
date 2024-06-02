@@ -3,7 +3,7 @@
 
 ## Softwarearchitektur
 
-Die Chatapp, Tiny Whatsapp, besteht aus einer Client-Client-Server-Architektur. Es wurde ein Client als WPF-Anwendung und ein Client als WebApp implementiert. Diese kommunizieren mit dem Spring Boot Server. Die Benutzerdaten und Chats werden in einer MongoDB Datenbank gespeichert.
+Die Chatapp, Tiny Whatsapp, besteht aus einer Client-Client-Server-Architektur. Es wurde ein Client als WPF-Anwendung und ein Client als WebApp implementiert. Diese kommunizieren mit dem Spring Boot Server und werden von einem Websocket über neue Nachrichten informiert. Die Benutzerdaten und Chats werden in einer MongoDB Datenbank gespeichert.
 
 ```mermaid
 graph TD;
