@@ -148,7 +148,10 @@ namespace WpfClient
                     LstBoxMsgs.Items.Add(messageItem);
                 }
             }
-            LstBoxMsgs.ScrollIntoView(LstBoxMsgs.Items[LstBoxMsgs.Items.Count - 1]);
+            if (LstBoxMsgs.Items.Count != 0)
+            {
+                LstBoxMsgs.ScrollIntoView(LstBoxMsgs.Items[LstBoxMsgs.Items.Count - 1]);
+            }
         }
 
         //Chatauswahl des Benutzers verwalten
